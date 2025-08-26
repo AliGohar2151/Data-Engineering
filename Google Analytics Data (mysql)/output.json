@@ -1,0 +1,3103 @@
+[
+  {
+    "Sessions": {
+      "title": "Stream ID",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "13",
+          "column_name": "stream_id"
+        }
+      ],
+      "resolved_column_name": "stream_id"
+    }
+  },
+  {
+    "Sessions": {
+      "title": "Platform",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "14",
+          "column_name": "platform"
+        }
+      ],
+      "resolved_column_name": "platform"
+    }
+  },
+  {
+    "Sessions": {
+      "title": "User ID",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "8",
+          "column_name": "user_id"
+        }
+      ],
+      "resolved_column_name": "user_id"
+    }
+  },
+  {
+    "Sessions": {
+      "title": "User Pseudo ID",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "9",
+          "column_name": "user_pseudo_id"
+        }
+      ],
+      "resolved_column_name": "user_pseudo_id"
+    }
+  },
+  {
+    "Sessions": {
+      "title": "Event Date",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "1",
+          "column_name": "event_date"
+        }
+      ],
+      "resolved_column_name": "event_date"
+    }
+  },
+  {
+    "Sessions": {
+      "title": "Event Timestap",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "2",
+          "column_name": "event_timestamp"
+        }
+      ],
+      "resolved_column_name": "event_timestap"
+    }
+  },
+  {
+    "Sessions": {
+      "title": "Anonymize IP",
+      "field_priority": [
+        {
+          "data_type": "event_parameter"
+        }
+      ],
+      "resolved_column_name": "anonymize_ip"
+    }
+  },
+  {
+    "Sessions": {
+      "title": "Debug Mode",
+      "field_priority": [
+        {
+          "data_type": "event_parameter"
+        }
+      ],
+      "resolved_column_name": "debug_mode"
+    }
+  },
+  {
+    "Sessions": {
+      "title": "GA4 Session ID",
+      "field_priority": [
+        {
+          "data_type": "event_parameter"
+        }
+      ],
+      "resolved_column_name": "ga4_session_id"
+    }
+  },
+  {
+    "Sessions": {
+      "title": "GA Session Number",
+      "field_priority": [
+        {
+          "data_type": "event_parameter"
+        }
+      ],
+      "resolved_column_name": "ga_session_number"
+    }
+  },
+  {
+    "Sessions": {
+      "title": "Source",
+      "field_priority": [
+        {
+          "data_type": "custom_function",
+          "custom_function": "url_query(ep.page_location, utm_source)"
+        },
+        {
+          "data_type": "model_column",
+          "column_id": "53",
+          "column_name": "collected_traffic_source_manual_source"
+        },
+        {
+          "data_type": "event_parameter"
+        },
+        {
+          "data_type": "model_column",
+          "column_id": "65",
+          "column_name": "session_traffic_source_last_click_manual_campaign_source"
+        },
+        {
+          "data_type": "model_column",
+          "column_id": "80",
+          "column_name": "session_traffic_source_last_click_cross_channel_campaign_source"
+        },
+        {
+          "data_type": "model_column",
+          "column_id": "50",
+          "column_name": "traffic_source_source"
+        }
+      ],
+      "resolved_column_name": "source"
+    }
+  },
+  {
+    "Sessions": {
+      "title": "Medium",
+      "field_priority": [
+        {
+          "data_type": "custom_function",
+          "custom_function": "url_query(ep.page_location, utm_medium)"
+        },
+        {
+          "data_type": "model_column",
+          "column_id": "54",
+          "column_name": "collected_traffic_source_manual_medium"
+        },
+        {
+          "data_type": "event_parameter"
+        },
+        {
+          "data_type": "model_column",
+          "column_id": "66",
+          "column_name": "session_traffic_source_last_click_manual_campaign_medium"
+        },
+        {
+          "data_type": "model_column",
+          "column_id": "81",
+          "column_name": "session_traffic_source_last_click_cross_channel_campaign_medium"
+        },
+        {
+          "data_type": "model_column",
+          "column_id": "49",
+          "column_name": "traffic_source_medium"
+        }
+      ],
+      "resolved_column_name": "medium"
+    }
+  },
+  {
+    "Sessions": {
+      "title": "Campaign",
+      "field_priority": [
+        {
+          "data_type": "custom_function",
+          "custom_function": "url_query(ep.page_location, utm_campaign)"
+        },
+        {
+          "data_type": "model_column",
+          "column_id": "52",
+          "column_name": "collected_traffic_source_manual_campaign_name"
+        },
+        {
+          "data_type": "event_parameter"
+        },
+        {
+          "data_type": "model_column",
+          "column_id": "64",
+          "column_name": "session_traffic_source_last_click_manual_campaign_campaign_name"
+        },
+        {
+          "data_type": "model_column",
+          "column_id": "79",
+          "column_name": "session_traffic_source_last_click_cross_channel_campaign_campaign_name"
+        },
+        {
+          "data_type": "model_column",
+          "column_id": "48",
+          "column_name": "traffic_source_name"
+        }
+      ],
+      "resolved_column_name": "campaign"
+    }
+  },
+  {
+    "Sessions": {
+      "title": "Term",
+      "field_priority": [
+        {
+          "data_type": "custom_function",
+          "custom_function": "url_query(ep.page_location, utm_term)"
+        },
+        {
+          "data_type": "model_column",
+          "column_id": "55",
+          "column_name": "collected_traffic_source_manual_term"
+        },
+        {
+          "data_type": "event_parameter"
+        },
+        {
+          "data_type": "model_column",
+          "column_id": "67",
+          "column_name": "session_traffic_source_last_click_manual_campaign_term"
+        }
+      ],
+      "resolved_column_name": "term"
+    }
+  },
+  {
+    "Sessions": {
+      "title": "Content",
+      "field_priority": [
+        {
+          "data_type": "custom_function",
+          "custom_function": "url_query(ep.page_location, utm_content)"
+        },
+        {
+          "data_type": "model_column",
+          "column_id": "56",
+          "column_name": "collected_traffic_source_manual_content"
+        },
+        {
+          "data_type": "event_parameter"
+        },
+        {
+          "data_type": "model_column",
+          "column_id": "68",
+          "column_name": "session_traffic_source_last_click_manual_campaign_content"
+        }
+      ],
+      "resolved_column_name": "content"
+    }
+  },
+  {
+    "Sessions": {
+      "title": "Campaign ID",
+      "field_priority": [
+        {
+          "data_type": "custom_function",
+          "custom_function": "url_query(ep.page_location, utm_id)"
+        },
+        {
+          "data_type": "model_column",
+          "column_id": "51",
+          "column_name": "collected_traffic_source_manual_campaign_id"
+        },
+        {
+          "data_type": "event_parameter"
+        },
+        {
+          "data_type": "model_column",
+          "column_id": "63",
+          "column_name": "session_traffic_source_last_click_manual_campaign_campaign_id"
+        },
+        {
+          "data_type": "model_column",
+          "column_id": "78",
+          "column_name": "session_traffic_source_last_click_cross_channel_campaign_campaign_id"
+        }
+      ],
+      "resolved_column_name": "campaign_id"
+    }
+  },
+  {
+    "Sessions": {
+      "title": "GCLID",
+      "field_priority": [
+        {
+          "data_type": "custom_function",
+          "custom_function": "url_query(ep.page_location, gclid)"
+        },
+        {
+          "data_type": "model_column",
+          "column_id": "60",
+          "column_name": "collected_traffic_source_gclid"
+        },
+        {
+          "data_type": "event_parameter"
+        }
+      ],
+      "resolved_column_name": "gclid"
+    }
+  },
+  {
+    "Sessions": {
+      "title": "FBCLID",
+      "field_priority": [
+        {
+          "data_type": "custom_function",
+          "custom_function": "url_query(ep.page_location, fbclid)"
+        },
+        {
+          "data_type": "event_parameter"
+        }
+      ],
+      "resolved_column_name": "fbclid"
+    }
+  },
+  {
+    "Sessions": {
+      "title": "DCLID",
+      "field_priority": [
+        {
+          "data_type": "custom_function",
+          "custom_function": "url_query(ep.page_location, dclid)"
+        },
+        {
+          "data_type": "model_column",
+          "column_id": "61",
+          "column_name": "collected_traffic_source_dclid"
+        },
+        {
+          "data_type": "event_parameter"
+        }
+      ],
+      "resolved_column_name": "dclid"
+    }
+  },
+  {
+    "Sessions": {
+      "title": "GCLSRC",
+      "field_priority": [
+        {
+          "data_type": "custom_function",
+          "custom_function": "url_query(ep.page_location, gclsrc)"
+        },
+        {
+          "data_type": "event_parameter"
+        }
+      ],
+      "resolved_column_name": "gclsrc"
+    }
+  },
+  {
+    "Sessions": {
+      "title": "SRSLTID",
+      "field_priority": [
+        {
+          "data_type": "custom_function",
+          "custom_function": "url_query(ep.page_location, srsltid)"
+        },
+        {
+          "data_type": "model_column",
+          "column_id": "62",
+          "column_name": "collected_traffic_source_srsltid"
+        },
+        {
+          "data_type": "event_parameter"
+        }
+      ],
+      "resolved_column_name": "srsltid"
+    }
+  },
+  {
+    "Sessions": {
+      "title": "WBRAID",
+      "field_priority": [
+        {
+          "data_type": "custom_function",
+          "custom_function": "url_query(ep.page_location, wbraid)"
+        }
+      ],
+      "resolved_column_name": "wbraid"
+    }
+  },
+  {
+    "Sessions": {
+      "title": "GBRAID",
+      "field_priority": [
+        {
+          "data_type": "custom_function",
+          "custom_function": "url_query(ep.page_location, gbraid)"
+        }
+      ],
+      "resolved_column_name": "gbraid"
+    }
+  },
+  {
+    "Sessions": {
+      "title": "MSCLKID",
+      "field_priority": [
+        {
+          "data_type": "custom_function",
+          "custom_function": "url_query(ep.page_location, msclkid)"
+        }
+      ],
+      "resolved_column_name": "msclkid"
+    }
+  },
+  {
+    "Sessions": {
+      "title": "Landing Page",
+      "field_priority": [
+        {
+          "data_type": "event_parameter"
+        }
+      ],
+      "resolved_column_name": "landing_page"
+    }
+  },
+  {
+    "Sessions": {
+      "title": "Referral Source",
+      "field_priority": [
+        {
+          "data_type": "event_parameter"
+        }
+      ],
+      "resolved_column_name": "referral_source"
+    }
+  },
+  {
+    "Sessions": {
+      "title": "Experiment ID",
+      "field_priority": [
+        {
+          "data_type": "event_parameter"
+        }
+      ],
+      "resolved_column_name": "experiment_id"
+    }
+  },
+  {
+    "Sessions": {
+      "title": "Experiment Name",
+      "field_priority": [
+        {
+          "data_type": "event_parameter"
+        }
+      ],
+      "resolved_column_name": "experiment_name"
+    }
+  },
+  {
+    "Sessions": {
+      "title": "Variant ID",
+      "field_priority": [
+        {
+          "data_type": "event_parameter"
+        }
+      ],
+      "resolved_column_name": "variant_id"
+    }
+  },
+  {
+    "Sessions": {
+      "title": "Variant Name",
+      "field_priority": [
+        {
+          "data_type": "event_parameter"
+        }
+      ],
+      "resolved_column_name": "variant_name"
+    }
+  },
+  {
+    "Sessions": {
+      "title": "Privacy Info - Analytics Storage",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "22",
+          "column_name": "privacy_info_analytics_storage"
+        }
+      ],
+      "resolved_column_name": "privacy_info_-_analytics_storage"
+    }
+  },
+  {
+    "Sessions": {
+      "title": "Privacy Info - Ads Storage",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "23",
+          "column_name": "privacy_info_ads_storage"
+        }
+      ],
+      "resolved_column_name": "privacy_info_-_ads_storage"
+    }
+  },
+  {
+    "Sessions": {
+      "title": "Privacy Info - Uses Transient Token",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "24",
+          "column_name": "privacy_info_uses_transient_token"
+        }
+      ],
+      "resolved_column_name": "privacy_info_-_uses_transient_token"
+    }
+  },
+  {
+    "Sessions": {
+      "title": "Device - Category",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "25",
+          "column_name": "device_category"
+        }
+      ],
+      "resolved_column_name": "device_-_category"
+    }
+  },
+  {
+    "Sessions": {
+      "title": "Device - Mobile Brand Name",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "26",
+          "column_name": "device_mobile_brand_name"
+        }
+      ],
+      "resolved_column_name": "device_-_mobile_brand_name"
+    }
+  },
+  {
+    "Sessions": {
+      "title": "Device - Mobile Model Name",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "27",
+          "column_name": "device_mobile_model_name"
+        }
+      ],
+      "resolved_column_name": "device_-_mobile_model_name"
+    }
+  },
+  {
+    "Sessions": {
+      "title": "Device - Mobile Marketing Name",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "28",
+          "column_name": "device_mobile_marketing_name"
+        }
+      ],
+      "resolved_column_name": "device_-_mobile_marketing_name"
+    }
+  },
+  {
+    "Sessions": {
+      "title": "Device - Mobile OS Hardware Model",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "29",
+          "column_name": "device_mobile_os_hardware_model"
+        }
+      ],
+      "resolved_column_name": "device_-_mobile_os_hardware_model"
+    }
+  },
+  {
+    "Sessions": {
+      "title": "Device - Operating System",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "30",
+          "column_name": "device_operating_system"
+        }
+      ],
+      "resolved_column_name": "device_-_operating_system"
+    }
+  },
+  {
+    "Sessions": {
+      "title": "Device - Operating System Version",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "31",
+          "column_name": "device_operating_system_version"
+        }
+      ],
+      "resolved_column_name": "device_-_operating_system_version"
+    }
+  },
+  {
+    "Sessions": {
+      "title": "Device - Vendor ID",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "32",
+          "column_name": "device_vendor_id"
+        }
+      ],
+      "resolved_column_name": "device_-_vendor_id"
+    }
+  },
+  {
+    "Sessions": {
+      "title": "Device - Advertising ID",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "33",
+          "column_name": "device_advertising_id"
+        }
+      ],
+      "resolved_column_name": "device_-_advertising_id"
+    }
+  },
+  {
+    "Sessions": {
+      "title": "Device - Language",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "34",
+          "column_name": "device_language"
+        }
+      ],
+      "resolved_column_name": "device_-_language"
+    }
+  },
+  {
+    "Sessions": {
+      "title": "Device - Is Limited Ad Tracking",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "35",
+          "column_name": "device_is_limited_ad_tracking"
+        }
+      ],
+      "resolved_column_name": "device_-_is_limited_ad_tracking"
+    }
+  },
+  {
+    "Sessions": {
+      "title": "Device - Timezone Offset Settings",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "36",
+          "column_name": "device_time_zone_offset_seconds"
+        }
+      ],
+      "resolved_column_name": "device_-_timezone_offset_settings"
+    }
+  },
+  {
+    "Sessions": {
+      "title": "Device - Browser",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "37",
+          "column_name": "device_browser"
+        }
+      ],
+      "resolved_column_name": "device_-_browser"
+    }
+  },
+  {
+    "Sessions": {
+      "title": "Device - Browser Version",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "38",
+          "column_name": "device_browser_version"
+        }
+      ],
+      "resolved_column_name": "device_-_browser_version"
+    }
+  },
+  {
+    "Sessions": {
+      "title": "Device - Web Info Browser",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "39",
+          "column_name": "device_web_info_browser"
+        }
+      ],
+      "resolved_column_name": "device_-_web_info_browser"
+    }
+  },
+  {
+    "Sessions": {
+      "title": "Device - Web Info Browser Version",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "40",
+          "column_name": "device_web_info_browser_version"
+        }
+      ],
+      "resolved_column_name": "device_-_web_info_browser_version"
+    }
+  },
+  {
+    "Sessions": {
+      "title": "Device - Web Info Hostname",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "41",
+          "column_name": "device_web_info_hostname"
+        }
+      ],
+      "resolved_column_name": "device_-_web_info_hostname"
+    }
+  },
+  {
+    "Sessions": {
+      "title": "Geo - City",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "42",
+          "column_name": "geo_city"
+        }
+      ],
+      "resolved_column_name": "geo_-_city"
+    }
+  },
+  {
+    "Sessions": {
+      "title": "Geo - Country",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "43",
+          "column_name": "geo_country"
+        }
+      ],
+      "resolved_column_name": "geo_-_country"
+    }
+  },
+  {
+    "Sessions": {
+      "title": "Geo - Continent",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "44",
+          "column_name": "geo_continent"
+        }
+      ],
+      "resolved_column_name": "geo_-_continent"
+    }
+  },
+  {
+    "Sessions": {
+      "title": "Geo - Region",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "45",
+          "column_name": "geo_region"
+        }
+      ],
+      "resolved_column_name": "geo_-_region"
+    }
+  },
+  {
+    "Sessions": {
+      "title": "Geo - Sub Continent",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "46",
+          "column_name": "geo_sub_continent"
+        }
+      ],
+      "resolved_column_name": "geo_-_sub_continent"
+    }
+  },
+  {
+    "Sessions": {
+      "title": "Geo - Metro",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "47",
+          "column_name": "geo_metro"
+        }
+      ],
+      "resolved_column_name": "geo_-_metro"
+    }
+  },
+  {
+    "Sessions": {
+      "title": "Google Ads - Campaign",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "108",
+          "column_name": "session_traffic_source_last_click_google_ads_campaign"
+        }
+      ],
+      "resolved_column_name": "google_ads_-_campaign"
+    }
+  },
+  {
+    "Sessions": {
+      "title": "Google Ads - Account Name",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "73",
+          "column_name": "session_traffic_source_last_click_google_ads_campaign_account_name"
+        }
+      ],
+      "resolved_column_name": "google_ads_-_account_name"
+    }
+  },
+  {
+    "Sessions": {
+      "title": "Google Ads - Ad Group ID",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "76",
+          "column_name": "session_traffic_source_last_click_google_ads_campaign_ad_group_id"
+        }
+      ],
+      "resolved_column_name": "google_ads_-_ad_group_id"
+    }
+  },
+  {
+    "Sessions": {
+      "title": "Google Ads - Ad Group Name",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "77",
+          "column_name": "session_traffic_source_last_click_google_ads_campaign_ad_group_name"
+        }
+      ],
+      "resolved_column_name": "google_ads_-_ad_group_name"
+    }
+  },
+  {
+    "Sessions": {
+      "title": "Google Ads - Campaign ID",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "74",
+          "column_name": "session_traffic_source_last_click_google_ads_campaign_campaign_id"
+        }
+      ],
+      "resolved_column_name": "google_ads_-_campaign_id"
+    }
+  },
+  {
+    "Sessions": {
+      "title": "Google Ads - Campaign Name",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "75",
+          "column_name": "session_traffic_source_last_click_google_ads_campaign_campaign_name"
+        }
+      ],
+      "resolved_column_name": "google_ads_-_campaign_name"
+    }
+  },
+  {
+    "Sessions": {
+      "title": "Google Ads - Customer ID",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "72",
+          "column_name": "session_traffic_source_last_click_google_ads_campaign_customer_id"
+        }
+      ],
+      "resolved_column_name": "google_ads_-_customer_id"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "FBCLID",
+      "field_priority": [
+        {
+          "data_type": "custom_function",
+          "custom_function": "url_query(ep.page_location, fbclid)"
+        },
+        {
+          "data_type": "event_parameter"
+        }
+      ],
+      "resolved_column_name": "fbclid"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "GBRAID",
+      "field_priority": [
+        {
+          "data_type": "custom_function",
+          "custom_function": "url_query(ep.page_location, gbraid)"
+        }
+      ],
+      "resolved_column_name": "gbraid"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "GCLID",
+      "field_priority": [
+        {
+          "data_type": "custom_function",
+          "custom_function": "url_query(ep.page_location, gclid)"
+        },
+        {
+          "data_type": "model_column",
+          "column_id": "60",
+          "column_name": "collected_traffic_source_gclid"
+        },
+        {
+          "data_type": "event_parameter"
+        }
+      ],
+      "resolved_column_name": "gclid"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "GCLSRC",
+      "field_priority": [
+        {
+          "data_type": "custom_function",
+          "custom_function": "url_query(ep.page_location, gclsrc)"
+        },
+        {
+          "data_type": "event_parameter"
+        }
+      ],
+      "resolved_column_name": "gclsrc"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "MSCLKID",
+      "field_priority": [
+        {
+          "data_type": "custom_function",
+          "custom_function": "url_query(ep.page_location, msclkid)"
+        }
+      ],
+      "resolved_column_name": "msclkid"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "SRSLTID",
+      "field_priority": [
+        {
+          "data_type": "custom_function",
+          "custom_function": "url_query(ep.page_location, srsltid)"
+        },
+        {
+          "data_type": "model_column",
+          "column_id": "62",
+          "column_name": "collected_traffic_source_srsltid"
+        },
+        {
+          "data_type": "event_parameter"
+        }
+      ],
+      "resolved_column_name": "srsltid"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "Campaign",
+      "field_priority": [
+        {
+          "data_type": "custom_function",
+          "custom_function": "url_query(ep.page_location, utm_campaign)"
+        },
+        {
+          "data_type": "model_column",
+          "column_id": "52",
+          "column_name": "collected_traffic_source_manual_campaign_name"
+        },
+        {
+          "data_type": "event_parameter"
+        },
+        {
+          "data_type": "model_column",
+          "column_id": "64",
+          "column_name": "session_traffic_source_last_click_manual_campaign_campaign_name"
+        },
+        {
+          "data_type": "model_column",
+          "column_id": "79",
+          "column_name": "session_traffic_source_last_click_cross_channel_campaign_campaign_name"
+        },
+        {
+          "data_type": "model_column",
+          "column_id": "48",
+          "column_name": "traffic_source_name"
+        }
+      ],
+      "resolved_column_name": "campaign"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "Content",
+      "field_priority": [
+        {
+          "data_type": "custom_function",
+          "custom_function": "url_query(ep.page_location, utm_content)"
+        },
+        {
+          "data_type": "model_column",
+          "column_id": "56",
+          "column_name": "collected_traffic_source_manual_content"
+        },
+        {
+          "data_type": "event_parameter"
+        },
+        {
+          "data_type": "model_column",
+          "column_id": "68",
+          "column_name": "session_traffic_source_last_click_manual_campaign_content"
+        }
+      ],
+      "resolved_column_name": "content"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "Campaign ID",
+      "field_priority": [
+        {
+          "data_type": "custom_function",
+          "custom_function": "url_query(ep.page_location, utm_id)"
+        },
+        {
+          "data_type": "model_column",
+          "column_id": "51",
+          "column_name": "collected_traffic_source_manual_campaign_id"
+        },
+        {
+          "data_type": "event_parameter"
+        },
+        {
+          "data_type": "model_column",
+          "column_id": "63",
+          "column_name": "session_traffic_source_last_click_manual_campaign_campaign_id"
+        },
+        {
+          "data_type": "model_column",
+          "column_id": "78",
+          "column_name": "session_traffic_source_last_click_cross_channel_campaign_campaign_id"
+        }
+      ],
+      "resolved_column_name": "campaign_id"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "Medium",
+      "field_priority": [
+        {
+          "data_type": "custom_function",
+          "custom_function": "url_query(ep.page_location, utm_medium)"
+        },
+        {
+          "data_type": "model_column",
+          "column_id": "54",
+          "column_name": "collected_traffic_source_manual_medium"
+        },
+        {
+          "data_type": "event_parameter"
+        },
+        {
+          "data_type": "model_column",
+          "column_id": "66",
+          "column_name": "session_traffic_source_last_click_manual_campaign_medium"
+        },
+        {
+          "data_type": "model_column",
+          "column_id": "81",
+          "column_name": "session_traffic_source_last_click_cross_channel_campaign_medium"
+        },
+        {
+          "data_type": "model_column",
+          "column_id": "49",
+          "column_name": "traffic_source_medium"
+        }
+      ],
+      "resolved_column_name": "medium"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "Source",
+      "field_priority": [
+        {
+          "data_type": "custom_function",
+          "custom_function": "url_query(ep.page_location, utm_source)"
+        },
+        {
+          "data_type": "model_column",
+          "column_id": "53",
+          "column_name": "collected_traffic_source_manual_source"
+        },
+        {
+          "data_type": "event_parameter"
+        },
+        {
+          "data_type": "model_column",
+          "column_id": "65",
+          "column_name": "session_traffic_source_last_click_manual_campaign_source"
+        },
+        {
+          "data_type": "model_column",
+          "column_id": "80",
+          "column_name": "session_traffic_source_last_click_cross_channel_campaign_source"
+        },
+        {
+          "data_type": "model_column",
+          "column_id": "50",
+          "column_name": "traffic_source_source"
+        }
+      ],
+      "resolved_column_name": "source"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "Term",
+      "field_priority": [
+        {
+          "data_type": "custom_function",
+          "custom_function": "url_query(ep.page_location, utm_term)"
+        },
+        {
+          "data_type": "model_column",
+          "column_id": "55",
+          "column_name": "collected_traffic_source_manual_term"
+        },
+        {
+          "data_type": "event_parameter"
+        },
+        {
+          "data_type": "model_column",
+          "column_id": "67",
+          "column_name": "session_traffic_source_last_click_manual_campaign_term"
+        }
+      ],
+      "resolved_column_name": "term"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "WBRAID",
+      "field_priority": [
+        {
+          "data_type": "custom_function",
+          "custom_function": "url_query(ep.page_location, wbraid)"
+        }
+      ],
+      "resolved_column_name": "wbraid"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "Anonymize IP",
+      "field_priority": [
+        {
+          "data_type": "event_parameter"
+        }
+      ],
+      "resolved_column_name": "anonymize_ip"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "Debug Mode",
+      "field_priority": [
+        {
+          "data_type": "event_parameter"
+        }
+      ],
+      "resolved_column_name": "debug_mode"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "GA4 Session ID",
+      "field_priority": [
+        {
+          "data_type": "event_parameter"
+        }
+      ],
+      "resolved_column_name": "ga4_session_id"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "GA Session Number",
+      "field_priority": [
+        {
+          "data_type": "event_parameter"
+        }
+      ],
+      "resolved_column_name": "ga_session_number"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "Referral Source",
+      "field_priority": [
+        {
+          "data_type": "event_parameter"
+        }
+      ],
+      "resolved_column_name": "referral_source"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "Experiment ID",
+      "field_priority": [
+        {
+          "data_type": "event_parameter"
+        }
+      ],
+      "resolved_column_name": "experiment_id"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "Experiment Name",
+      "field_priority": [
+        {
+          "data_type": "event_parameter"
+        }
+      ],
+      "resolved_column_name": "experiment_name"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "Variant ID",
+      "field_priority": [
+        {
+          "data_type": "event_parameter"
+        }
+      ],
+      "resolved_column_name": "variant_id"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "Variant Name",
+      "field_priority": [
+        {
+          "data_type": "event_parameter"
+        }
+      ],
+      "resolved_column_name": "variant_name"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "Event Date",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "1",
+          "column_name": "event_date"
+        }
+      ],
+      "resolved_column_name": "event_date"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "Google Ads - Campaign",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "108",
+          "column_name": "session_traffic_source_last_click_google_ads_campaign"
+        }
+      ],
+      "resolved_column_name": "google_ads_-_campaign"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "Stream ID",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "13",
+          "column_name": "stream_id"
+        }
+      ],
+      "resolved_column_name": "stream_id"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "Platform",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "14",
+          "column_name": "platform"
+        }
+      ],
+      "resolved_column_name": "platform"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "Event Timestap",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "2",
+          "column_name": "event_timestamp"
+        }
+      ],
+      "resolved_column_name": "event_timestap"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "Privacy Info - Analytics Storage",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "22",
+          "column_name": "privacy_info_analytics_storage"
+        }
+      ],
+      "resolved_column_name": "privacy_info_-_analytics_storage"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "Privacy Info - Ads Storage",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "23",
+          "column_name": "privacy_info_ads_storage"
+        }
+      ],
+      "resolved_column_name": "privacy_info_-_ads_storage"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "Privacy Info - Uses Transient Token",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "24",
+          "column_name": "privacy_info_uses_transient_token"
+        }
+      ],
+      "resolved_column_name": "privacy_info_-_uses_transient_token"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "Device - Category",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "25",
+          "column_name": "device_category"
+        }
+      ],
+      "resolved_column_name": "device_-_category"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "Device - Mobile Brand Name",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "26",
+          "column_name": "device_mobile_brand_name"
+        }
+      ],
+      "resolved_column_name": "device_-_mobile_brand_name"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "Device - Mobile Model Name",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "27",
+          "column_name": "device_mobile_model_name"
+        }
+      ],
+      "resolved_column_name": "device_-_mobile_model_name"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "Device - Mobile Marketing Name",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "28",
+          "column_name": "device_mobile_marketing_name"
+        }
+      ],
+      "resolved_column_name": "device_-_mobile_marketing_name"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "Device - Mobile OS Hardware Model",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "29",
+          "column_name": "device_mobile_os_hardware_model"
+        }
+      ],
+      "resolved_column_name": "device_-_mobile_os_hardware_model"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "Device - Operating System",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "30",
+          "column_name": "device_operating_system"
+        }
+      ],
+      "resolved_column_name": "device_-_operating_system"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "Device - Operating System Version",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "31",
+          "column_name": "device_operating_system_version"
+        }
+      ],
+      "resolved_column_name": "device_-_operating_system_version"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "Device - Vendor ID",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "32",
+          "column_name": "device_vendor_id"
+        }
+      ],
+      "resolved_column_name": "device_-_vendor_id"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "Device - Advertising ID",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "33",
+          "column_name": "device_advertising_id"
+        }
+      ],
+      "resolved_column_name": "device_-_advertising_id"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "Device - Language",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "34",
+          "column_name": "device_language"
+        }
+      ],
+      "resolved_column_name": "device_-_language"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "Device - Is Limited Ad Tracking",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "35",
+          "column_name": "device_is_limited_ad_tracking"
+        }
+      ],
+      "resolved_column_name": "device_-_is_limited_ad_tracking"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "Device - Timezone Offset Settings",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "36",
+          "column_name": "device_time_zone_offset_seconds"
+        }
+      ],
+      "resolved_column_name": "device_-_timezone_offset_settings"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "Device - Browser",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "37",
+          "column_name": "device_browser"
+        }
+      ],
+      "resolved_column_name": "device_-_browser"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "Device - Browser Version",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "38",
+          "column_name": "device_browser_version"
+        }
+      ],
+      "resolved_column_name": "device_-_browser_version"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "Device - Web Info Browser",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "39",
+          "column_name": "device_web_info_browser"
+        }
+      ],
+      "resolved_column_name": "device_-_web_info_browser"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "Device - Web Info Browser Version",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "40",
+          "column_name": "device_web_info_browser_version"
+        }
+      ],
+      "resolved_column_name": "device_-_web_info_browser_version"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "Device - Web Info Hostname",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "41",
+          "column_name": "device_web_info_hostname"
+        }
+      ],
+      "resolved_column_name": "device_-_web_info_hostname"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "Geo - City",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "42",
+          "column_name": "geo_city"
+        }
+      ],
+      "resolved_column_name": "geo_-_city"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "Geo - Country",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "43",
+          "column_name": "geo_country"
+        }
+      ],
+      "resolved_column_name": "geo_-_country"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "Geo - Continent",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "44",
+          "column_name": "geo_continent"
+        }
+      ],
+      "resolved_column_name": "geo_-_continent"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "Geo - Region",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "45",
+          "column_name": "geo_region"
+        }
+      ],
+      "resolved_column_name": "geo_-_region"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "Geo - Sub Continent",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "46",
+          "column_name": "geo_sub_continent"
+        }
+      ],
+      "resolved_column_name": "geo_-_sub_continent"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "Geo - Metro",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "47",
+          "column_name": "geo_metro"
+        }
+      ],
+      "resolved_column_name": "geo_-_metro"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "Google Ads - Customer ID",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "72",
+          "column_name": "session_traffic_source_last_click_google_ads_campaign_customer_id"
+        }
+      ],
+      "resolved_column_name": "google_ads_-_customer_id"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "Google Ads - Account Name",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "73",
+          "column_name": "session_traffic_source_last_click_google_ads_campaign_account_name"
+        }
+      ],
+      "resolved_column_name": "google_ads_-_account_name"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "Google Ads - Campaign ID",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "74",
+          "column_name": "session_traffic_source_last_click_google_ads_campaign_campaign_id"
+        }
+      ],
+      "resolved_column_name": "google_ads_-_campaign_id"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "Google Ads - Campaign Name",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "75",
+          "column_name": "session_traffic_source_last_click_google_ads_campaign_campaign_name"
+        }
+      ],
+      "resolved_column_name": "google_ads_-_campaign_name"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "Google Ads - Ad Group ID",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "76",
+          "column_name": "session_traffic_source_last_click_google_ads_campaign_ad_group_id"
+        }
+      ],
+      "resolved_column_name": "google_ads_-_ad_group_id"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "Google Ads - Ad Group Name",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "77",
+          "column_name": "session_traffic_source_last_click_google_ads_campaign_ad_group_name"
+        }
+      ],
+      "resolved_column_name": "google_ads_-_ad_group_name"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "User ID",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "8",
+          "column_name": "user_id"
+        }
+      ],
+      "resolved_column_name": "user_id"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "User Pseudo ID",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "9",
+          "column_name": "user_pseudo_id"
+        }
+      ],
+      "resolved_column_name": "user_pseudo_id"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "DCLID",
+      "field_priority": [
+        {
+          "data_type": "custom_function",
+          "custom_function": "url_query(ep.page_location, dclid)"
+        },
+        {
+          "data_type": "model_column",
+          "column_id": "61",
+          "column_name": "collected_traffic_source_dclid"
+        },
+        {
+          "data_type": "event_parameter"
+        }
+      ],
+      "resolved_column_name": "dclid"
+    }
+  },
+  {
+    "Pageviews": {
+      "title": "Device - Advertising ID",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "33",
+          "column_name": "device_advertising_id"
+        }
+      ],
+      "resolved_column_name": "device_-_advertising_id"
+    }
+  },
+  {
+    "Pageviews": {
+      "title": "Device - Browser",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "37",
+          "column_name": "device_browser"
+        }
+      ],
+      "resolved_column_name": "device_-_browser"
+    }
+  },
+  {
+    "Pageviews": {
+      "title": "Device - Browser Version",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "38",
+          "column_name": "device_browser_version"
+        }
+      ],
+      "resolved_column_name": "device_-_browser_version"
+    }
+  },
+  {
+    "Pageviews": {
+      "title": "Device - Category",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "25",
+          "column_name": "device_category"
+        }
+      ],
+      "resolved_column_name": "device_-_category"
+    }
+  },
+  {
+    "Pageviews": {
+      "title": "Device - Is Limited Ad Tracking",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "35",
+          "column_name": "device_is_limited_ad_tracking"
+        }
+      ],
+      "resolved_column_name": "device_-_is_limited_ad_tracking"
+    }
+  },
+  {
+    "Pageviews": {
+      "title": "Device - Language",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "34",
+          "column_name": "device_language"
+        }
+      ],
+      "resolved_column_name": "device_-_language"
+    }
+  },
+  {
+    "Pageviews": {
+      "title": "Device - Mobile Brand Name",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "26",
+          "column_name": "device_mobile_brand_name"
+        }
+      ],
+      "resolved_column_name": "device_-_mobile_brand_name"
+    }
+  },
+  {
+    "Pageviews": {
+      "title": "Device - Mobile Marketing Name",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "28",
+          "column_name": "device_mobile_marketing_name"
+        }
+      ],
+      "resolved_column_name": "device_-_mobile_marketing_name"
+    }
+  },
+  {
+    "Pageviews": {
+      "title": "Device - Mobile Model Name",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "27",
+          "column_name": "device_mobile_model_name"
+        }
+      ],
+      "resolved_column_name": "device_-_mobile_model_name"
+    }
+  },
+  {
+    "Pageviews": {
+      "title": "Device - Mobile OS Hardware Model",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "29",
+          "column_name": "device_mobile_os_hardware_model"
+        }
+      ],
+      "resolved_column_name": "device_-_mobile_os_hardware_model"
+    }
+  },
+  {
+    "Pageviews": {
+      "title": "Device - Operating System",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "30",
+          "column_name": "device_operating_system"
+        }
+      ],
+      "resolved_column_name": "device_-_operating_system"
+    }
+  },
+  {
+    "Pageviews": {
+      "title": "Device - Operating System Version",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "31",
+          "column_name": "device_operating_system_version"
+        }
+      ],
+      "resolved_column_name": "device_-_operating_system_version"
+    }
+  },
+  {
+    "Pageviews": {
+      "title": "Device - Timezone Offset Settings",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "36",
+          "column_name": "device_time_zone_offset_seconds"
+        }
+      ],
+      "resolved_column_name": "device_-_timezone_offset_settings"
+    }
+  },
+  {
+    "Pageviews": {
+      "title": "Device - Vendor ID",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "32",
+          "column_name": "device_vendor_id"
+        }
+      ],
+      "resolved_column_name": "device_-_vendor_id"
+    }
+  },
+  {
+    "Pageviews": {
+      "title": "Device - Web Info Browser",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "39",
+          "column_name": "device_web_info_browser"
+        }
+      ],
+      "resolved_column_name": "device_-_web_info_browser"
+    }
+  },
+  {
+    "Pageviews": {
+      "title": "Device - Web Info Browser Version",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "40",
+          "column_name": "device_web_info_browser_version"
+        }
+      ],
+      "resolved_column_name": "device_-_web_info_browser_version"
+    }
+  },
+  {
+    "Pageviews": {
+      "title": "Device - Web Info Hostname",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "41",
+          "column_name": "device_web_info_hostname"
+        }
+      ],
+      "resolved_column_name": "device_-_web_info_hostname"
+    }
+  },
+  {
+    "Pageviews": {
+      "title": "Event Date",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "1",
+          "column_name": "event_date"
+        }
+      ],
+      "resolved_column_name": "event_date"
+    }
+  },
+  {
+    "Pageviews": {
+      "title": "Event Timestap",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "2",
+          "column_name": "event_timestamp"
+        }
+      ],
+      "resolved_column_name": "event_timestap"
+    }
+  },
+  {
+    "Pageviews": {
+      "title": "Geo - City",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "42",
+          "column_name": "geo_city"
+        }
+      ],
+      "resolved_column_name": "geo_-_city"
+    }
+  },
+  {
+    "Pageviews": {
+      "title": "Geo - Continent",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "44",
+          "column_name": "geo_continent"
+        }
+      ],
+      "resolved_column_name": "geo_-_continent"
+    }
+  },
+  {
+    "Pageviews": {
+      "title": "Geo - Country",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "43",
+          "column_name": "geo_country"
+        }
+      ],
+      "resolved_column_name": "geo_-_country"
+    }
+  },
+  {
+    "Pageviews": {
+      "title": "Geo - Metro",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "47",
+          "column_name": "geo_metro"
+        }
+      ],
+      "resolved_column_name": "geo_-_metro"
+    }
+  },
+  {
+    "Pageviews": {
+      "title": "Geo - Region",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "45",
+          "column_name": "geo_region"
+        }
+      ],
+      "resolved_column_name": "geo_-_region"
+    }
+  },
+  {
+    "Pageviews": {
+      "title": "Geo - Sub Continent",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "46",
+          "column_name": "geo_sub_continent"
+        }
+      ],
+      "resolved_column_name": "geo_-_sub_continent"
+    }
+  },
+  {
+    "Pageviews": {
+      "title": "Page URL",
+      "field_priority": [
+        {
+          "data_type": "event_parameter"
+        }
+      ],
+      "resolved_column_name": "page_url"
+    }
+  },
+  {
+    "Events": {
+      "title": "Device - Advertising ID",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "33",
+          "column_name": "device_advertising_id"
+        }
+      ],
+      "resolved_column_name": "device_-_advertising_id"
+    }
+  },
+  {
+    "Events": {
+      "title": "Device - Browser",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "37",
+          "column_name": "device_browser"
+        }
+      ],
+      "resolved_column_name": "device_-_browser"
+    }
+  },
+  {
+    "Events": {
+      "title": "Device - Browser Version",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "38",
+          "column_name": "device_browser_version"
+        }
+      ],
+      "resolved_column_name": "device_-_browser_version"
+    }
+  },
+  {
+    "Events": {
+      "title": "Device - Category",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "25",
+          "column_name": "device_category"
+        }
+      ],
+      "resolved_column_name": "device_-_category"
+    }
+  },
+  {
+    "Events": {
+      "title": "Device - Is Limited Ad Tracking",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "35",
+          "column_name": "device_is_limited_ad_tracking"
+        }
+      ],
+      "resolved_column_name": "device_-_is_limited_ad_tracking"
+    }
+  },
+  {
+    "Events": {
+      "title": "Device - Language",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "34",
+          "column_name": "device_language"
+        }
+      ],
+      "resolved_column_name": "device_-_language"
+    }
+  },
+  {
+    "Events": {
+      "title": "Device - Mobile Brand Name",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "26",
+          "column_name": "device_mobile_brand_name"
+        }
+      ],
+      "resolved_column_name": "device_-_mobile_brand_name"
+    }
+  },
+  {
+    "Events": {
+      "title": "Device - Mobile Marketing Name",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "28",
+          "column_name": "device_mobile_marketing_name"
+        }
+      ],
+      "resolved_column_name": "device_-_mobile_marketing_name"
+    }
+  },
+  {
+    "Events": {
+      "title": "Device - Mobile Model Name",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "27",
+          "column_name": "device_mobile_model_name"
+        }
+      ],
+      "resolved_column_name": "device_-_mobile_model_name"
+    }
+  },
+  {
+    "Events": {
+      "title": "Device - Mobile OS Hardware Model",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "29",
+          "column_name": "device_mobile_os_hardware_model"
+        }
+      ],
+      "resolved_column_name": "device_-_mobile_os_hardware_model"
+    }
+  },
+  {
+    "Events": {
+      "title": "Device - Operating System",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "30",
+          "column_name": "device_operating_system"
+        }
+      ],
+      "resolved_column_name": "device_-_operating_system"
+    }
+  },
+  {
+    "Events": {
+      "title": "Device - Operating System Version",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "31",
+          "column_name": "device_operating_system_version"
+        }
+      ],
+      "resolved_column_name": "device_-_operating_system_version"
+    }
+  },
+  {
+    "Events": {
+      "title": "Device - Timezone Offset Settings",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "36",
+          "column_name": "device_time_zone_offset_seconds"
+        }
+      ],
+      "resolved_column_name": "device_-_timezone_offset_settings"
+    }
+  },
+  {
+    "Events": {
+      "title": "Device - Vendor ID",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "32",
+          "column_name": "device_vendor_id"
+        }
+      ],
+      "resolved_column_name": "device_-_vendor_id"
+    }
+  },
+  {
+    "Events": {
+      "title": "Device - Web Info Browser",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "39",
+          "column_name": "device_web_info_browser"
+        }
+      ],
+      "resolved_column_name": "device_-_web_info_browser"
+    }
+  },
+  {
+    "Events": {
+      "title": "Device - Web Info Browser Version",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "40",
+          "column_name": "device_web_info_browser_version"
+        }
+      ],
+      "resolved_column_name": "device_-_web_info_browser_version"
+    }
+  },
+  {
+    "Events": {
+      "title": "Device - Web Info Hostname",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "41",
+          "column_name": "device_web_info_hostname"
+        }
+      ],
+      "resolved_column_name": "device_-_web_info_hostname"
+    }
+  },
+  {
+    "Events": {
+      "title": "Event Date",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "1",
+          "column_name": "event_date"
+        }
+      ],
+      "resolved_column_name": "event_date"
+    }
+  },
+  {
+    "Events": {
+      "title": "Event Timestap",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "2",
+          "column_name": "event_timestamp"
+        }
+      ],
+      "resolved_column_name": "event_timestap"
+    }
+  },
+  {
+    "Events": {
+      "title": "Geo - City",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "42",
+          "column_name": "geo_city"
+        }
+      ],
+      "resolved_column_name": "geo_-_city"
+    }
+  },
+  {
+    "Events": {
+      "title": "Geo - Continent",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "44",
+          "column_name": "geo_continent"
+        }
+      ],
+      "resolved_column_name": "geo_-_continent"
+    }
+  },
+  {
+    "Events": {
+      "title": "Geo - Country",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "43",
+          "column_name": "geo_country"
+        }
+      ],
+      "resolved_column_name": "geo_-_country"
+    }
+  },
+  {
+    "Events": {
+      "title": "Geo - Metro",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "47",
+          "column_name": "geo_metro"
+        }
+      ],
+      "resolved_column_name": "geo_-_metro"
+    }
+  },
+  {
+    "Events": {
+      "title": "Geo - Region",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "45",
+          "column_name": "geo_region"
+        }
+      ],
+      "resolved_column_name": "geo_-_region"
+    }
+  },
+  {
+    "Events": {
+      "title": "Geo - Sub Continent",
+      "field_priority": [
+        {
+          "data_type": "model_column",
+          "column_id": "46",
+          "column_name": "geo_sub_continent"
+        }
+      ],
+      "resolved_column_name": "geo_-_sub_continent"
+    }
+  },
+  {
+    "Events": {
+      "title": "Page URL",
+      "field_priority": [
+        {
+          "data_type": "event_parameter"
+        }
+      ],
+      "resolved_column_name": "page_url"
+    }
+  },
+  {
+    "Pageviews": {
+      "title": "Engagement Time Msec",
+      "field_priority": [
+        {
+          "data_type": "event_parameter"
+        }
+      ],
+      "resolved_column_name": "engagement_time_msec"
+    }
+  },
+  {
+    "Pageviews": {
+      "title": "Page Title",
+      "field_priority": [
+        {
+          "data_type": "event_parameter"
+        }
+      ],
+      "resolved_column_name": "page_title"
+    }
+  },
+  {
+    "Pageviews": {
+      "title": "Page Referrer",
+      "field_priority": [
+        {
+          "data_type": "event_parameter"
+        }
+      ],
+      "resolved_column_name": "page_referrer"
+    }
+  },
+  {
+    "Events": {
+      "title": "Event Name",
+      "field_priority": [
+        {
+          "data_type": "custom_function",
+          "custom_function": "get(event_name)"
+        }
+      ],
+      "resolved_column_name": "event_name"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "Event Name",
+      "field_priority": [
+        {
+          "data_type": "custom_function",
+          "custom_function": "get(event_name)"
+        }
+      ],
+      "resolved_column_name": "event_name"
+    }
+  },
+  {
+    "Events": {
+      "title": "Is Conversion",
+      "field_priority": [
+        {
+          "data_type": "custom_function",
+          "custom_function": "lookup(ga4_model.ga4_org_model_event_types.conversion_event, event_type_id)"
+        }
+      ],
+      "resolved_column_name": "is_conversion"
+    }
+  },
+  {
+    "Events": {
+      "title": "Is Key Event",
+      "field_priority": [
+        {
+          "data_type": "custom_function",
+          "custom_function": "lookup(ga4_model.ga4_org_model_event_types.key_event, event_type_id)"
+        }
+      ],
+      "resolved_column_name": "is_key_event"
+    }
+  },
+  {
+    "Events": {
+      "title": "Is Ecommerce Event",
+      "field_priority": [
+        {
+          "data_type": "custom_function",
+          "custom_function": "lookup(ga4_model.ga4_org_model_event_types.ecommerce_event, event_type_id)"
+        }
+      ],
+      "resolved_column_name": "is_ecommerce_event"
+    }
+  },
+  {
+    "Events": {
+      "title": "Is Interaction Event",
+      "field_priority": [
+        {
+          "data_type": "custom_function",
+          "custom_function": "lookup(ga4_model.ga4_org_model_event_types.interaction_event, event_type_id)"
+        }
+      ],
+      "resolved_column_name": "is_interaction_event"
+    }
+  },
+  {
+    "Events": {
+      "title": "Is Ignored Event",
+      "field_priority": [
+        {
+          "data_type": "custom_function",
+          "custom_function": "lookup(ga4_model.ga4_org_model_event_types.ignore_event, event_type_id)"
+        }
+      ],
+      "resolved_column_name": "is_ignored_event"
+    }
+  },
+  {
+    "Events": {
+      "title": "Engagement Time Msec",
+      "field_priority": [
+        {
+          "data_type": "event_parameter"
+        }
+      ],
+      "resolved_column_name": "engagement_time_msec"
+    }
+  },
+  {
+    "Events": {
+      "title": "Engagement Time Seconds",
+      "field_priority": [
+        {
+          "data_type": "event_parameter"
+        }
+      ],
+      "resolved_column_name": "engagement_time_seconds"
+    }
+  },
+  {
+    "Events": {
+      "title": "Value",
+      "field_priority": [
+        {
+          "data_type": "event_parameter"
+        }
+      ],
+      "resolved_column_name": "value"
+    }
+  },
+  {
+    "Events": {
+      "title": "Sub Total",
+      "field_priority": [
+        {
+          "data_type": "event_parameter"
+        }
+      ],
+      "resolved_column_name": "sub_total"
+    }
+  },
+  {
+    "Events": {
+      "title": "Discount",
+      "field_priority": [
+        {
+          "data_type": "event_parameter"
+        }
+      ],
+      "resolved_column_name": "discount"
+    }
+  },
+  {
+    "Events": {
+      "title": "Currency",
+      "field_priority": [
+        {
+          "data_type": "event_parameter"
+        }
+      ],
+      "resolved_column_name": "currency"
+    }
+  },
+  {
+    "Events": {
+      "title": "Coupon",
+      "field_priority": [
+        {
+          "data_type": "event_parameter"
+        }
+      ],
+      "resolved_column_name": "coupon"
+    }
+  },
+  {
+    "Events": {
+      "title": "Shipping",
+      "field_priority": [
+        {
+          "data_type": "event_parameter"
+        }
+      ],
+      "resolved_column_name": "shipping"
+    }
+  },
+  {
+    "Events": {
+      "title": "Tax",
+      "field_priority": [
+        {
+          "data_type": "event_parameter"
+        }
+      ],
+      "resolved_column_name": "tax"
+    }
+  },
+  {
+    "Events": {
+      "title": "Event Classes",
+      "field_priority": [
+        {
+          "data_type": "event_parameter"
+        }
+      ],
+      "resolved_column_name": "event_classes"
+    }
+  },
+  {
+    "Events": {
+      "title": "Event IDs",
+      "field_priority": [
+        {
+          "data_type": "event_parameter"
+        }
+      ],
+      "resolved_column_name": "event_ids"
+    }
+  },
+  {
+    "Events": {
+      "title": "Event Text",
+      "field_priority": [
+        {
+          "data_type": "event_parameter"
+        }
+      ],
+      "resolved_column_name": "event_text"
+    }
+  },
+  {
+    "Events": {
+      "title": "Event Domains",
+      "field_priority": [
+        {
+          "data_type": "event_parameter"
+        }
+      ],
+      "resolved_column_name": "event_domains"
+    }
+  },
+  {
+    "Events": {
+      "title": "Event Outcome",
+      "field_priority": [
+        {
+          "data_type": "event_parameter"
+        }
+      ],
+      "resolved_column_name": "event_outcome"
+    }
+  },
+  {
+    "Events": {
+      "title": "Percent Complete",
+      "field_priority": [
+        {
+          "data_type": "event_parameter"
+        }
+      ],
+      "resolved_column_name": "percent_complete"
+    }
+  },
+  {
+    "Events": {
+      "title": "Ecommerce",
+      "field_priority": [
+        {
+          "data_type": "event_parameter"
+        }
+      ],
+      "resolved_column_name": "ecommerce"
+    }
+  },
+  {
+    "Events": {
+      "title": "Items",
+      "field_priority": [
+        {
+          "data_type": "event_parameter"
+        }
+      ],
+      "resolved_column_name": "items"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "Currency",
+      "field_priority": [
+        {
+          "data_type": "event_parameter"
+        }
+      ],
+      "resolved_column_name": "currency"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "Discount",
+      "field_priority": [
+        {
+          "data_type": "event_parameter"
+        }
+      ],
+      "resolved_column_name": "discount"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "Ecommerce",
+      "field_priority": [
+        {
+          "data_type": "event_parameter"
+        }
+      ],
+      "resolved_column_name": "ecommerce"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "Engagement Time Msec",
+      "field_priority": [
+        {
+          "data_type": "event_parameter"
+        }
+      ],
+      "resolved_column_name": "engagement_time_msec"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "Engagement Time Seconds",
+      "field_priority": [
+        {
+          "data_type": "event_parameter"
+        }
+      ],
+      "resolved_column_name": "engagement_time_seconds"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "Event Classes",
+      "field_priority": [
+        {
+          "data_type": "event_parameter"
+        }
+      ],
+      "resolved_column_name": "event_classes"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "Event Domains",
+      "field_priority": [
+        {
+          "data_type": "event_parameter"
+        }
+      ],
+      "resolved_column_name": "event_domains"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "Event IDs",
+      "field_priority": [
+        {
+          "data_type": "event_parameter"
+        }
+      ],
+      "resolved_column_name": "event_ids"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "Event Outcome",
+      "field_priority": [
+        {
+          "data_type": "event_parameter"
+        }
+      ],
+      "resolved_column_name": "event_outcome"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "Event Text",
+      "field_priority": [
+        {
+          "data_type": "event_parameter"
+        }
+      ],
+      "resolved_column_name": "event_text"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "Is Conversion",
+      "field_priority": [
+        {
+          "data_type": "custom_function",
+          "custom_function": "lookup(ga4_model.ga4_org_model_event_types.conversion_event, event_type_id)"
+        }
+      ],
+      "resolved_column_name": "is_conversion"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "Is Ecommerce Event",
+      "field_priority": [
+        {
+          "data_type": "custom_function",
+          "custom_function": "lookup(ga4_model.ga4_org_model_event_types.ecommerce_event, event_type_id)"
+        }
+      ],
+      "resolved_column_name": "is_ecommerce_event"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "Is Ignored Event",
+      "field_priority": [
+        {
+          "data_type": "custom_function",
+          "custom_function": "lookup(ga4_model.ga4_org_model_event_types.ignore_event, event_type_id)"
+        }
+      ],
+      "resolved_column_name": "is_ignored_event"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "Is Interaction Event",
+      "field_priority": [
+        {
+          "data_type": "custom_function",
+          "custom_function": "lookup(ga4_model.ga4_org_model_event_types.interaction_event, event_type_id)"
+        }
+      ],
+      "resolved_column_name": "is_interaction_event"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "Is Key Event",
+      "field_priority": [
+        {
+          "data_type": "custom_function",
+          "custom_function": "lookup(ga4_model.ga4_org_model_event_types.key_event, event_type_id)"
+        }
+      ],
+      "resolved_column_name": "is_key_event"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "Items",
+      "field_priority": [
+        {
+          "data_type": "event_parameter"
+        }
+      ],
+      "resolved_column_name": "items"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "Page URL",
+      "field_priority": [
+        {
+          "data_type": "event_parameter"
+        }
+      ],
+      "resolved_column_name": "page_url"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "Percent Complete",
+      "field_priority": [
+        {
+          "data_type": "event_parameter"
+        }
+      ],
+      "resolved_column_name": "percent_complete"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "Shipping",
+      "field_priority": [
+        {
+          "data_type": "event_parameter"
+        }
+      ],
+      "resolved_column_name": "shipping"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "Sub Total",
+      "field_priority": [
+        {
+          "data_type": "event_parameter"
+        }
+      ],
+      "resolved_column_name": "sub_total"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "Tax",
+      "field_priority": [
+        {
+          "data_type": "event_parameter"
+        }
+      ],
+      "resolved_column_name": "tax"
+    }
+  },
+  {
+    "Sessionless Events": {
+      "title": "Coupon",
+      "field_priority": [
+        {
+          "data_type": "event_parameter"
+        }
+      ],
+      "resolved_column_name": "coupon"
+    }
+  },
+  {
+    "Sessions": {
+      "title": "Engagement Time Msec",
+      "field_priority": [
+        {
+          "data_type": "event_parameter"
+        }
+      ],
+      "resolved_column_name": "engagement_time_msec"
+    }
+  },
+  {
+    "Sessions": {
+      "title": "Landing Page Title",
+      "field_priority": [
+        {
+          "data_type": "event_parameter"
+        }
+      ],
+      "resolved_column_name": "landing_page_title"
+    }
+  },
+  {
+    "Events": {
+      "title": "Event URL",
+      "field_priority": [
+        {
+          "data_type": "event_parameter"
+        }
+      ],
+      "resolved_column_name": "event_url"
+    }
+  }
+]
