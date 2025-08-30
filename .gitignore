@@ -184,3 +184,6 @@ temp/
 Google Analytics Data/CSV_output/
 Google Analytics Data/parquet_output/
 Google Analytics Data (mysql)/parquet_output/
+docker-compose.yml
+MariaDB.py
+Database/
