@@ -96,3 +96,13 @@ class MappingRules:
         with open(filepath, "w") as f:
             json.dump(final_json, f, indent=4)
         return filepath
+
+
+# Why Numpy?
+# ------------------------------------------------------------
+# Note:
+# In performance-critical code (like applying mapping rules),
+# it's often better to use NumPy arrays instead of pandas Series.
+# NumPy arrays avoid pandas index/metadata overhead, are stored
+# in contiguous memory, and allow vectorized operations to run
+# significantly faster than looping over Series objects.
