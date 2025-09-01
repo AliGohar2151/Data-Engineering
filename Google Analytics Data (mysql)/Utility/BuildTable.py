@@ -10,7 +10,7 @@ def map_rules_to_df(df, mapping_rules, table_name):
     Does NOT apply any grouping/aggregation — that must be done outside.
     """
     output_df = pd.DataFrame(index=df.index)
-
+    ep_columns = [column for column in df.columns if column.startswith("ep_")]
     for entry in mapping_rules:
         if table_name not in entry:
             continue
@@ -25,11 +25,22 @@ def map_rules_to_df(df, mapping_rules, table_name):
         for r in field_priority:
             if r.get("data_type") == "model_column":
                 col = r.get("column_name")
-                if col in df:
-                    value_series = df[col]
-                    break
+                if col in df.columns:
+                    mask = value_series.isna()
+                    value_series[mask] = df.loc[mask, col]
+
             elif r.get("data_type") == "event_parameter":
-                pass
+                ev_name = r.get("event_name")
+                ep_name = r.get("ep")
+                ep_column = f"ep_{ep_name}"
+
+                if ep_column in ep_columns:
+                    mask = (
+                        df["event_name"].astype(str).eq(str(ev_name))
+                        & value_series.isna()
+                    )
+                    # mask = (df['event_name'].astype(str).eq(str(ev_name)).isna())
+                    value_series[mask] = df.loc[mask, ep_column]
 
         output_df[resolved_column_name] = value_series
 
@@ -62,7 +73,7 @@ def groupby_sessions(df, time_col="event_timestamp", session_col="session_id"):
                 col: (col, "first")
                 for col in df.columns
                 if col not in [time_col, session_col]
-            }
+            },
         )
         .reset_index()
     )
@@ -80,7 +91,7 @@ def groupby_pageview(df, time_col="event_timestamp", pageview_col="pageview_id")
                 col: (col, "first")
                 for col in df.columns
                 if col not in [time_col, pageview_col]
-            }
+            },
         )
         .reset_index()
     )
@@ -99,7 +110,7 @@ def groupby_events(df, time_col="event_timestamp", event_col="event_id"):
                 col: (col, "first")
                 for col in df.columns
                 if col not in [time_col, event_col]
-            }
+            },
         )
         .reset_index()
     )
