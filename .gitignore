@@ -187,3 +187,5 @@ Google Analytics Data (mysql)/parquet_output/
 docker-compose.yml
 script_mysql_joins/MariaDB.py
 Database/
+ga4-data/ga4-raw-data/
+ga4-data/ga4-clean
