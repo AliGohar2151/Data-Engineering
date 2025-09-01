@@ -2,63 +2,72 @@ import pandas as pd
 import os
 import shutil
 
+import numpy as np
 
-def map_rules_to_df(df, mapping_rules, table_name):
-    """
-    Map rules to build a DataFrame with columns defined by mapping_rules
-    for a given table_name.
-    Does NOT apply any grouping/aggregation — that must be done outside.
-    """
+
+def build_table(df, mapping_rules, table_name):
     output_df = pd.DataFrame(index=df.index)
-    ep_columns = [column for column in df.columns if column.startswith("ep_")]
+    if table_name == "Sessions":
+        for col in ["event_timestamp", "year", "month", "event_name", "session_id"]:
+            output_df[col] = df[col]
+    elif table_name == "Pageviews":
+        for col in [
+            "event_timestamp",
+            "year",
+            "month",
+            "event_name",
+            "session_id",
+            "pageview_id",
+        ]:
+            output_df[col] = df[col]
+    elif table_name == "Events":
+        for col in [
+            "event_timestamp",
+            "year",
+            "month",
+            "event_name",
+            "session_id",
+            "pageview_id",
+            "event_id",
+        ]:
+            output_df[col] = df[col]
+
+    available_model_columns = set(df.columns)
+    ep_columns = [c for c in df.columns if c.startswith("ep_")]
+    event_name_arr = df["event_name"].values
+
     for entry in mapping_rules:
         if table_name not in entry:
             continue
 
         field_info = entry[table_name]
-        resolved_column_name = field_info.get(
-            "resolved_column_name", field_info.get("title")
-        )
+        field_title = field_info["title"]
         field_priority = field_info.get("field_priority", [])
-        value_series = pd.Series([None] * len(df), index=df.index)
+
+        values = np.full(len(df), None, dtype=object)
+        nan_mask = pd.isna(values)
 
         for r in field_priority:
+            if not nan_mask.any():
+                break
             if r.get("data_type") == "model_column":
                 col = r.get("column_name")
-                if col in df.columns:
-                    mask = value_series.isna()
-                    value_series[mask] = df.loc[mask, col]
-
+                if col in available_model_columns:
+                    values[nan_mask] = df[col].values[nan_mask]
+                    nan_mask = pd.isna(values)
             elif r.get("data_type") == "event_parameter":
-                ev_name = r.get("event_name")
-                ep_name = r.get("ep")
-                ep_column = f"ep_{ep_name}"
+                rules_map = {ev: f"ep_{ep}" for ev, ep in r["rules"].items()}
+                for ev_name, ep_col in rules_map.items():
+                    if not nan_mask.any():
+                        break
+                    if ep_col in ep_columns:
+                        event_mask = event_name_arr == ev_name
+                        combined_mask = event_mask & nan_mask
+                        values[combined_mask] = df[ep_col].values[combined_mask]
+                        nan_mask = pd.isna(values)
 
-                if ep_column in ep_columns:
-                    mask = (
-                        df["event_name"].astype(str).eq(str(ev_name))
-                        & value_series.isna()
-                    )
-                    # mask = (df['event_name'].astype(str).eq(str(ev_name)).isna())
-                    value_series[mask] = df.loc[mask, ep_column]
+        output_df[field_title] = pd.Series(values, index=df.index)
 
-        output_df[resolved_column_name] = value_series
-
-        output_df["event_timestamp"] = df["event_timestamp"]
-        output_df["year"] = df["year"]
-        output_df["month"] = df["month"]
-
-        if "Session" in table_name:
-            output_df["session_id"] = df["session_id"]
-        elif "Pageviews" in table_name:
-            output_df["session_id"] = df["session_id"]
-            output_df["pageview_id"] = df["pageview_id"]
-            output_df["stream_id"] = df["stream_id"]
-        elif "Events" in table_name:
-            output_df["session_id"] = df["session_id"]
-            output_df["pageview_id"] = df["pageview_id"]
-            output_df["stream_id"] = df["stream_id"]
-            output_df["event_id"] = df["event_id"]
     return output_df
 
 
