@@ -1,214 +1,98 @@
 import pandas as pd
+import ast
 import json
-from sqlalchemy import create_engine  # type: ignore
+from .MariaDB import MariaDBClient
 
 
-def build_ga4_mapping(
-    user="root", password="admin", host="localhost", port="3306", database="ga4_db"
-):
-    try:
-        engine = create_engine(
-            f"mysql+pymysql://{user}:{password}@{host}:{port}/{database}"
-        )
-        engine.connect()
-    except Exception as e:
-        return e
-
-    try:
-        ga4_org_model_tables = pd.read_sql(
-            "SELECT id, title, parent_model_table_id FROM ga4_org_model_tables", engine
-        )
-        ga4_model_columns = pd.read_sql(
-            "SELECT id, column_name FROM ga4_model_columns", engine
-        )
-        ga4_org_model_table_fields = pd.read_sql(
-            "SELECT id,title,associated_table_id,field_priority FROM ga4_org_model_table_fields",
-            engine,
-        )
-        ga4_org_model_event_parameters_types = pd.read_sql(
-            "SELECT id,event_type_id,table_field_id FROM ga4_org_model_event_parameters_types",
-            engine,
-        )
-        ga4_model_event_parameters = pd.read_sql(
-            "SELECT id,event_name,ep,event_parameter_type_id FROM ga4_model_event_parameters",
-            engine,
-        )
-    except Exception as e:
-        return e
-
-    try:
-        # Convert field_priority JSON strings into Python lists/dicts
-        ga4_org_model_table_fields["field_priority"] = ga4_org_model_table_fields[
-            "field_priority"
-        ].apply(json.loads)
-
-        # Map column_id -> column_name
-        col_map = dict(zip(ga4_model_columns["id"], ga4_model_columns["column_name"]))
-
-        output = []
-
-        # Merge tables to align fields with their parent model tables
-        mergerd = ga4_org_model_table_fields.merge(
-            ga4_org_model_tables,
-            how="left",
-            left_on="associated_table_id",
-            right_on="id",
+class MappingRules:
+    def __init__(self, host, user, password, database):
+        self.db = MariaDBClient(
+            host=host, user=user, password=password, database=database
         )
 
-        for _, row in mergerd.iterrows():
-            root = row["title_y"]  # Table name (e.g., "Sessions")
-            field_priority = row["field_priority"]
+    def load_data(self):
+        query = """
+        SELECT
+            tf.id,
+            tf.title as field_title,
+            mt.title,
+            tf.field_priority,
+            ep.event_name,
+            ep.ep
+        FROM
+            ga4_org_model_table_fields tf
+        LEFT JOIN ga4_org_model_tables mt 
+            ON tf.associated_table_id = mt.id
+        LEFT JOIN ga4_org_model_event_parameters_types ept 
+            ON tf.id = ept.table_field_id
+        LEFT JOIN ga4_model_event_parameters ep 
+            ON ept.id = ep.event_parameter_type_id;
+        """
 
-            new_priority = []
+        df = pd.DataFrame(self.db.read_query(query))
 
-            for fp in field_priority:
-                if fp["data_type"] == "model_column" and "column_id" in fp:
-                    # Replace column_id with actual column_name
-                    col_id = int(fp["column_id"])
-                    fp["column_name"] = col_map.get(col_id)
-                    new_priority.append(fp)
+        query_cols = "Select id,column_name from ga4_model_columns"
+        model_col_df = pd.DataFrame(self.db.read_query(query_cols))
 
-                elif fp["data_type"] == "event_parameter":
-                    # Find matching event parameter types for this field
-                    field_id = row["id_x"]
-                    param_type_ids = ga4_org_model_event_parameters_types.loc[
-                        ga4_org_model_event_parameters_types["table_field_id"]
-                        == field_id,
-                        "id",
-                    ].tolist()
+        return df, model_col_df
 
-                    # Fetch actual event_name + ep mappings
-                    rules = ga4_model_event_parameters.loc[
-                        ga4_model_event_parameters["event_parameter_type_id"].isin(
-                            param_type_ids
-                        ),
-                        ["event_name", "ep"],
-                    ].to_dict(orient="records")
+    def build_rules(self):
 
-                    # Instead of putting them under "rules", expand them as separate entries
-                    for rule in rules:
-                        new_priority.append(
+        df, model_col_df = self.load_data()
+
+        df["field_priority"] = df["field_priority"].apply(
+            lambda x: ast.literal_eval(x) if isinstance(x, str) else x
+        )
+
+        col_dict = dict(zip(model_col_df["id"], model_col_df["column_name"]))
+
+        combined_dict = {}
+
+        for _, row in df.iterrows():
+            key = (row["title"], row["field_title"])
+            entry = combined_dict.setdefault(
+                key, {"title": row["field_title"], "field_priority": []}
+            )
+
+            ep_entry = next(
+                (
+                    x
+                    for x in entry["field_priority"]
+                    if x["data_type"] == "event_parameter"
+                ),
+                None,
+            )
+
+            for fp in row["field_priority"]:
+                if fp["data_type"] == "model_column":
+                    column_id = fp["column_id"]
+                    column_name = col_dict.get(int(column_id))
+
+                    if not any(
+                        c.get("column_id") == column_id
+                        for c in entry["field_priority"]
+                        if c["data_type"] == "model_column"
+                    ):
+                        entry["field_priority"].append(
                             {
-                                "data_type": "event_parameter",
-                                "event_name": rule["event_name"],
-                                "ep": rule["ep"],
+                                "data_type": "model_column",
+                                "column_id": column_id,
+                                "column_name": column_name,
                             }
                         )
 
-                else:
-                    # For custom_function or other types
-                    new_priority.append(fp)
+                elif fp["data_type"] == "event_parameter":
+                    if not ep_entry:
+                        ep_entry = {"data_type": "event_parameter", "rules": {}}
+                        entry["field_priority"].append(ep_entry)
+                    # Now safe
+                    ep_entry["rules"][row["event_name"]] = row["ep"]
 
-            entry = {
-                root: {
-                    "title": row["title_x"],
-                    "field_priority": new_priority,
-                    "resolved_column_name": row["title_x"].lower().replace(" ", "_"),
-                }
-            }
+        final_json = [{table: info} for (table, _), info in combined_dict.items()]
+        return final_json
 
-            output.append(entry)
-
-        return output
-
-    except Exception as e:
-        return e
-
-
-# import pandas as pd
-# import json
-# from sqlalchemy import create_engine
-
-
-# def build_ga4_mapping(
-#     user="root", password="admin", host="localhost", port="3306", database="ga4_db"
-# ):
-
-#     try:
-#         engine = create_engine(
-#             f"mysql+pymysql://{user}:{password}@{host}:{port}/{database}"
-#         )
-#         engine.connect()
-#     except Exception as e:
-#         return e
-
-#     try:
-#         ga4_org_model_tables = pd.read_sql(
-#             "SELECT id, title, parent_model_table_id FROM ga4_org_model_tables", engine
-#         )
-#         ga4_model_columns = pd.read_sql(
-#             "SELECT id, column_name FROM ga4_model_columns", engine
-#         )
-#         ga4_org_model_table_fields = pd.read_sql(
-#             "SELECT id,title,associated_table_id,field_priority FROM ga4_org_model_table_fields",
-#             engine,
-#         )
-#         ga4_org_model_event_parameters_types = pd.read_sql(
-#             "SELECT id,event_type_id,table_field_id FROM ga4_org_model_event_parameters_types",
-#             engine,
-#         )
-#         ga4_model_event_parameters = pd.read_sql(
-#             "SELECT id,event_name,ep,event_parameter_type_id FROM ga4_model_event_parameters",
-#             engine,
-#         )
-#     except Exception as e:
-#         return e
-
-#     try:
-#         ga4_org_model_table_fields["field_priority"] = ga4_org_model_table_fields[
-#             "field_priority"
-#         ].apply(json.loads)
-
-#         col_map = dict(zip(ga4_model_columns["id"], ga4_model_columns["column_name"]))
-
-#         output = []
-
-#         mergerd = ga4_org_model_table_fields.merge(
-#             ga4_org_model_tables,
-#             how="left",
-#             left_on="associated_table_id",
-#             right_on="id",
-#         )
-
-#         for _, row in mergerd.iterrows():
-#             root = row["title_y"]
-#             field_priority = row["field_priority"]
-
-#             new_priority = []
-
-#             for fp in field_priority:
-#                 if fp["data_type"] == "model_column" and "column_id" in fp:
-#                     col_id = int(fp["column_id"])
-#                     fp["column_name"] = col_map.get(col_id)
-
-#                 elif fp["data_type"] == "event_parameter":
-#                     field_id = row["id_x"]
-#                     param_type_ids = ga4_org_model_event_parameters_types.loc[
-#                         ga4_org_model_event_parameters_types["table_field_id"]
-#                         == field_id,
-#                         "id",
-#                     ].tolist()
-#                     rules = ga4_model_event_parameters.loc[
-#                         ga4_model_event_parameters["event_parameter_type_id"].isin(
-#                             param_type_ids
-#                         ),
-#                         ["event_name", "ep"],
-#                     ].to_dict(orient="records")
-#                     fp["rules"] = rules
-
-#                 new_priority.append(fp)
-
-#             entry = {
-#                 root: {
-#                     "title": row["title_x"],
-#                     "field_priority": new_priority,
-#                     "resolved_column_name": row["title_x"].lower().replace(" ", "_"),
-#                 }
-#             }
-
-#             output.append(entry)
-
-#         return output
-
-#     except Exception as e:
-#         return e
+    def save_rules(self, filepath="mapping_rules.json"):
+        final_json = self.build_rules()
+        with open(filepath, "w") as f:
+            json.dump(final_json, f, indent=4)
+        return filepath
