@@ -20,6 +20,18 @@ print("Looking in:", input_dir)
 
 
 def make_session_id(file_path):
+    """
+    Makes a session id for each row in the dataframe, based on the following rules:
+
+    - A new session is created if the time difference between the current and previous event is > 30 minutes.
+    - A new session is created for the first event of each user.
+    - The session id is a uuid4 string.
+
+    The function sorts the dataframe by user_pseudo_id and event_timestamp, adds a session_id column, and returns the dataframe.
+
+    :param file_path: The path to a parquet file to read.
+    :return: A pandas DataFrame with a session_id column.
+    """
     df = pd.read_parquet(file_path)
 
     df["event_timestamp"] = pd.to_datetime(df["event_timestamp"], unit="us")
