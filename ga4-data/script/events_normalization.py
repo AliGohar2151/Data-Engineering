@@ -2,6 +2,9 @@ import json
 import pandas as pd
 import gzip
 import pathlib
+import time
+
+start = time.time()
 
 base_dir = pathlib.Path(__file__).parent
 
@@ -70,3 +73,6 @@ for file_path in input_dir.glob("*.json"):
     output_file = output_dir / f"{file_path.stem}.parquet"
     df.to_parquet(output_file, index=False)
     print(f"Saved {output_file}")
+
+end = time.time()
+print(f"Execution time: {end - start:.2f} seconds")
