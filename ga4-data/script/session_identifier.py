@@ -50,7 +50,21 @@ def make_session_id(df):
     )
     df["session_id"] = df.groupby("user_pseudo_id")["session_id"].ffill()
 
-    df.drop(columns=["previous_timestamp", "time_diff", "new_session"], inplace=True)
+    df["is_missing"] = (
+        df["ep_page_location"].isna()
+        | (df["ep_page_location"] == "None")
+        | (df["ep_page_location"] == "")
+        | (df["ep_page_location"] == "nan")
+    )
+
+    all_missing_sessions = df.groupby("session_id")["is_missing"].all()
+    bad_session_ids = all_missing_sessions[all_missing_sessions].index
+    df.loc[df["session_id"].isin(bad_session_ids), "session_id"] = None
+
+    df.drop(
+        columns=["previous_timestamp", "time_diff", "new_session", "is_missing"],
+        inplace=True,
+    )
     cols = list(df.columns)
     cols.insert(cols.index("event_timestamp") + 1, cols.pop(cols.index("session_id")))
     df = df[cols]
@@ -60,9 +74,8 @@ def make_session_id(df):
 
 def clean_dataframe(df: pd.DataFrame) -> pd.DataFrame:
     """Ensure all columns have compatible types for Parquet."""
-    for col in df.columns:
-        if df[col].dtype == "object":
-            df[col] = df[col].astype(str)
+    if "ep_ga_session_id" in df.columns:
+        df["ep_ga_session_id"] = df["ep_ga_session_id"].astype(str)
     return df
 
 
