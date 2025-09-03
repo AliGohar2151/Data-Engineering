@@ -110,13 +110,3 @@ print(f"Saved {output_dir / f'events_session_identifier.parquet'}")
 
 end = time.time()
 print(f"Execution time: {end - start:.2f} seconds")
-
-# print(f"Processing {file_path.name} ....")
-# df = make_session_id(file_path)
-
-# output_file = output_dir / f"{file_path.stem}.parquet"
-# df.to_parquet(output_file, index=False)
-# print(f"Saved {output_file}")
-
-# end = time.time()
-# print(f"Execution time: {end - start:.2f} seconds")
