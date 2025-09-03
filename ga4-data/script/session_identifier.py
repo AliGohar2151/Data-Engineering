@@ -34,7 +34,7 @@ def make_session_id(df):
     """
 
     df["event_timestamp"] = pd.to_datetime(df["event_timestamp"], unit="us")
-    df["ep_page_location"] = df["ep_page_location"].replace("nan", None)
+    df["ep_page_location"] = df["ep_page_location"].replace("nan", pd.NA)
     df = df.sort_values(["user_pseudo_id", "event_timestamp"])
     session_timeout = pd.Timedelta(minutes=30)
     df["previous_timestamp"] = df.groupby(["user_pseudo_id"])["event_timestamp"].shift()
@@ -59,7 +59,7 @@ def make_session_id(df):
 
     all_missing_sessions = df.groupby("session_id")["is_missing"].all()
     bad_session_ids = all_missing_sessions[all_missing_sessions].index
-    df.loc[df["session_id"].isin(bad_session_ids), "session_id"] = None
+    df.loc[df["session_id"].isin(bad_session_ids), "session_id"] = pd.NA
 
     df.drop(
         columns=["previous_timestamp", "time_diff", "new_session", "is_missing"],
