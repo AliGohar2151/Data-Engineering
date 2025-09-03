@@ -19,7 +19,7 @@ output_dir.mkdir(parents=True, exist_ok=True)
 print("Looking in:", input_dir)
 
 
-def make_session_id(file_path):
+def make_session_id(df):
     """
     Makes a session id for each row in the dataframe, based on the following rules:
 
@@ -32,9 +32,9 @@ def make_session_id(file_path):
     :param file_path: The path to a parquet file to read.
     :return: A pandas DataFrame with a session_id column.
     """
-    df = pd.read_parquet(file_path)
 
     df["event_timestamp"] = pd.to_datetime(df["event_timestamp"], unit="us")
+    df["ep_page_location"] = df["ep_page_location"].replace("nan", None)
     df = df.sort_values(["user_pseudo_id", "event_timestamp"])
     session_timeout = pd.Timedelta(minutes=30)
     df["previous_timestamp"] = df.groupby(["user_pseudo_id"])["event_timestamp"].shift()
@@ -49,6 +49,7 @@ def make_session_id(file_path):
         lambda x: str(uuid.uuid4()) if x else None
     )
     df["session_id"] = df.groupby("user_pseudo_id")["session_id"].ffill()
+
     df.drop(columns=["previous_timestamp", "time_diff", "new_session"], inplace=True)
     cols = list(df.columns)
     cols.insert(cols.index("event_timestamp") + 1, cols.pop(cols.index("session_id")))
@@ -57,13 +58,30 @@ def make_session_id(file_path):
     return df
 
 
-for file_path in input_dir.glob("*.parquet"):
-    print(f"Processing {file_path.name} ....")
-    df = make_session_id(file_path)
+def clean_dataframe(df: pd.DataFrame) -> pd.DataFrame:
+    """Ensure all columns have compatible types for Parquet."""
+    for col in df.columns:
+        if df[col].dtype == "object":
+            df[col] = df[col].astype(str)
+    return df
 
-    output_file = output_dir / f"{file_path.stem}.parquet"
-    df.to_parquet(output_file, index=False)
-    print(f"Saved {output_file}")
+
+all_files = list(input_dir.glob("*.parquet"))
+event_df = pd.concat([pd.read_parquet(f) for f in all_files], ignore_index=True)
+df = make_session_id(event_df)
+df = clean_dataframe(df)
+df.to_parquet(output_dir / f"events_session_identifier.parquet", index=False)
+print(f"Saved {output_dir / f'events_session_identifier.parquet'}")
 
 end = time.time()
 print(f"Execution time: {end - start:.2f} seconds")
+
+# print(f"Processing {file_path.name} ....")
+# df = make_session_id(file_path)
+
+# output_file = output_dir / f"{file_path.stem}.parquet"
+# df.to_parquet(output_file, index=False)
+# print(f"Saved {output_file}")
+
+# end = time.time()
+# print(f"Execution time: {end - start:.2f} seconds")
