@@ -21,13 +21,25 @@ print("Looking in:", input_dir)
 
 def make_session_id(df):
     """
-    Makes a session id for each row in the dataframe, based on the following rules:
+    Generate session identifiers for GA4 event data and clean missing page locations.
 
-    - A new session is created if the time difference between the current and previous event is > 30 minutes.
+    Rules for session creation:
+    - A new session is created if the time difference between the current and previous
+      event of the same user is > 30 minutes.
     - A new session is created for the first event of each user.
-    - The session id is a uuid4 string.
+    - Each new session receives a unique UUIDv4 string as the session_id.
+    - The same session_id is forward-filled to all subsequent rows until a new session starts.
 
-    The function sorts the dataframe by user_pseudo_id and event_timestamp, adds a session_id column, and returns the dataframe.
+    Additional functionality:
+    - Converts event_timestamp from microseconds to pandas datetime.
+    - Replaces invalid "nan" string values in ep_page_location with proper pd.NA.
+    - Flags events where ep_page_location is missing or invalid (None, empty string, "nan").
+    - Identifies and removes sessions where *all* page locations are missing by setting
+      their session_id to pd.NA.
+    - Within valid sessions, fills missing ep_page_location values using forward-fill
+      and backward-fill so that gaps are filled with nearby valid values.
+    - Drops temporary helper columns (previous_timestamp, time_diff, new_session, is_missing).
+    - Reorders session_id to appear immediately after event_timestamp for readability.
 
     :param file_path: The path to a parquet file to read.
     :return: A pandas DataFrame with a session_id column.
@@ -60,6 +72,16 @@ def make_session_id(df):
     all_missing_sessions = df.groupby("session_id")["is_missing"].all()
     bad_session_ids = all_missing_sessions[all_missing_sessions].index
     df.loc[df["session_id"].isin(bad_session_ids), "session_id"] = pd.NA
+
+    # sessions_with_some_missing = df.groupby("session_id")["is_missing"].any()
+
+    # sessions_with_some_missing = sessions_with_some_missing & ~all_missing_sessions
+    # some_missing_ids = sessions_with_some_missing[sessions_with_some_missing].index
+    # sessions_some_missing = df[df["session_id"].isin(some_missing_ids)]
+
+    df["ep_page_location"] = df.groupby("session_id")["ep_page_location"].transform(
+        lambda x: x.ffill().bfill()
+    )
 
     df.drop(
         columns=["previous_timestamp", "time_diff", "new_session", "is_missing"],
