@@ -188,8 +188,10 @@ docker-compose.yml
 script_mysql_joins/MariaDB.py
 Database/
 ga4-data/ga4-raw-data/
+ga4-data/notebook/
 ga4-data/ga4-clean
 ga4-data/script/testing.ipynb
 ga4-data/script/testing2.ipynb
 ga4-data/script/sessions.ipynb
 ga4-data/script/session_identifier.ipynb
+ga4-data/ga4-clean/notebook/
