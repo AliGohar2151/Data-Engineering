@@ -74,14 +74,12 @@ def make_session_id(df):
     df.loc[df["session_id"].isin(bad_session_ids), "session_id"] = pd.NA
 
     # sessions_with_some_missing = df.groupby("session_id")["is_missing"].any()
-
     # sessions_with_some_missing = sessions_with_some_missing & ~all_missing_sessions
     # some_missing_ids = sessions_with_some_missing[sessions_with_some_missing].index
     # sessions_some_missing = df[df["session_id"].isin(some_missing_ids)]
 
-    df["ep_page_location"] = df.groupby("session_id")["ep_page_location"].transform(
-        lambda x: x.ffill().bfill()
-    )
+    df["ep_page_location"] = df.groupby("session_id")["ep_page_location"].ffill()
+    df["ep_page_location"] = df.groupby("session_id")["ep_page_location"].bfill()
 
     df.drop(
         columns=["previous_timestamp", "time_diff", "new_session", "is_missing"],
