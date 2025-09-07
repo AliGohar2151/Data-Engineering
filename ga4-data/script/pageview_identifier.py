@@ -45,6 +45,7 @@ def make_pageview_id(df):
     """
 
     # Normalize URLs
+
     df["clean_page"] = [
         (
             url.split("?", 1)[0].split("#", 1)[0]
@@ -54,26 +55,36 @@ def make_pageview_id(df):
         for url in df["ep_page_location"]
     ]
 
-    # Detect new pageviews
-    df["is_new_pageview"] = (df["session_id"] != df["session_id"].shift(1)) | (
-        df["clean_page"] != df["clean_page"].shift(1)
+    df["is_new_pageview"] = (df["session_id"] != df["session_id"].shift()) | (
+        df["clean_page"] != df["clean_page"].shift()
     )
 
-    # Pageview counter per session (only for non-null session_id)
-    df["pageview_counter"] = (
-        df.groupby("session_id")["is_new_pageview"]
-        .cumsum()
-        .where(df["session_id"].notna())
+    first_pageview_idx = (
+        df[df["event_name"] == "page_view"]
+        .groupby("session_id", sort=False)
+        .head(1)
+        .index
     )
 
-    # Deterministic pageview_id
+    df.loc[first_pageview_idx, "is_new_pageview"] = df.loc[
+        first_pageview_idx, "is_new_pageview"
+    ] & (
+        df.loc[first_pageview_idx, "clean_page"]
+        != df.loc[first_pageview_idx].shift()["clean_page"]
+    )
+
+    mask_subsequent_pv = df["event_name"].eq("page_view") & ~df.index.isin(
+        first_pageview_idx
+    )
+    df.loc[mask_subsequent_pv, "is_new_pageview"] = True
+    df["pageview_counter"] = df.groupby("session_id")["is_new_pageview"].cumsum()
     df["pageview_id"] = [
         (
-            str(uuid.uuid5(uuid.NAMESPACE_DNS, f"{sid}_{int(page_counter)}"))
-            if pd.notna(sid) and pd.notna(page_counter)
+            str(uuid.uuid5(uuid.NAMESPACE_DNS, f"{sid}_{int(cnt)}"))
+            if pd.notna(sid) and pd.notna(cnt)
             else pd.NA
         )
-        for sid, page_counter in zip(df["session_id"], df["pageview_counter"])
+        for sid, cnt in zip(df["session_id"], df["pageview_counter"])
     ]
 
     # Drop helper columns
