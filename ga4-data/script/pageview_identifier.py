@@ -92,7 +92,14 @@ def make_pageview_id(df):
 
     # Reorder columns
     cols = list(df.columns)
-    desired_order = ["event_date", "event_timestamp", "session_id", "pageview_id"]
+    desired_order = [
+        "event_date",
+        "event_timestamp",
+        "session_id",
+        "pageview_id",
+        "event_name",
+        "ep_page_location",
+    ]
     new_order = desired_order + [c for c in cols if c not in desired_order]
 
     return df[new_order]
