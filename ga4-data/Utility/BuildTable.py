@@ -28,7 +28,7 @@ def build_table(df, mapping_rules, table_name):
             "event_name",
             "session_id",
             "pageview_id",
-            "event_id",
+            # "event_id",
         ]:
             output_df[col] = df[col]
 
