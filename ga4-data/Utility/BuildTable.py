@@ -15,6 +15,7 @@ def build_table(df, mapping_rules, table_name):
             "event_timestamp",
             "year",
             "month",
+            "stream_id",
             "event_name",
             "session_id",
             "pageview_id",
@@ -126,17 +127,34 @@ def groupby_events(df, time_col="event_timestamp", event_col="event_id"):
     return grouped
 
 
-def save_partitioned_parquet(df, base_path):
-    """
-    Save DataFrame partitioned by stream_id, year, month.
-    Overwrites existing parquet dataset each run.
-    """
-    if os.path.exists(base_path):
-        shutil.rmtree(base_path)
+import os
+import shutil
+import pandas as pd
 
+
+def save_partitioned_parquet(df, base_path, partition_cols):
+    """
+    Save a DataFrame as partitioned parquet files.
+    Deletes old partitions before writing.
+
+    Args:
+        df (pd.DataFrame): DataFrame to save
+        base_path (str): Output directory
+        partition_cols (list[str]): Columns to partition by
+    """
+
+    # Delete existing partitions for the values in df
+    for _, row in df[partition_cols].drop_duplicates().iterrows():
+        partition_path = base_path
+        for col in partition_cols:
+            partition_path = os.path.join(partition_path, f"{col}={row[col]}")
+        if os.path.exists(partition_path):
+            shutil.rmtree(partition_path)
+
+    # Write parquet
     df.to_parquet(
         base_path,
         engine="pyarrow",
         index=False,
-        partition_cols=["stream_id", "year", "month"],
+        partition_cols=partition_cols,
     )
