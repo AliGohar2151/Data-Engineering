@@ -1,14 +1,17 @@
 import pandas as pd
-import os
-import shutil
-
 import numpy as np
 
 
 def build_table(df, mapping_rules, table_name):
     output_df = pd.DataFrame(index=df.index)
     if table_name == "Sessions":
-        for col in ["event_timestamp", "year", "month", "event_name", "session_id"]:
+        for col in [
+            "event_timestamp",
+            "year",
+            "month",
+            "event_name",
+            "session_id",
+        ]:
             output_df[col] = df[col]
     elif table_name == "Pageviews":
         for col in [
@@ -27,9 +30,9 @@ def build_table(df, mapping_rules, table_name):
             "year",
             "month",
             "event_name",
+            "stream_id",
             "session_id",
             "pageview_id",
-            # "event_id",
         ]:
             output_df[col] = df[col]
 
@@ -91,70 +94,39 @@ def groupby_sessions(df, time_col="event_timestamp", session_col="session_id"):
 
 
 def groupby_pageview(df, time_col="event_timestamp", pageview_col="pageview_id"):
-    grouped = (
-        df.groupby(pageview_col)
-        .agg(
-            pageview_start_time=(time_col, "min"),
-            pageview_end_time=(time_col, "max"),
-            total_events=(time_col, "count"),
-            **{
-                col: (col, "first")
-                for col in df.columns
-                if col not in [time_col, pageview_col]
-            },
-        )
-        .reset_index()
+
+    representative_col = ["pageview_id", "event_name", "event_timestamp"]
+
+    firsts = df[representative_col].groupby(pageview_col).first()
+    pageviews = (
+        df.loc[df["event_name"] == "page_view", representative_col]
+        .groupby(pageview_col)
+        .first()
+    )
+    representative_rows = firsts.copy()
+    representative_rows.update(pageviews)
+
+    agg_dict = {
+        col: (col, "first") for col in df.columns if col not in representative_col
+    }
+    agg_dict["pageview_start_time"] = ("event_timestamp", "min")
+    agg_dict["pageview_end_time"] = ("event_timestamp", "max")
+    agg_dict["total_events"] = ("event_timestamp", "count")
+
+    grouped = df.groupby("pageview_id").agg(**agg_dict).reset_index()
+    grouped = grouped.merge(
+        representative_rows.reset_index(), on=pageview_col, how="left"
     )
 
     return grouped
-
-
-def groupby_events(df, time_col="event_timestamp", event_col="event_id"):
-    grouped = (
-        df.groupby(event_col)
-        .agg(
-            event_start_time=(time_col, "min"),
-            event_end_time=(time_col, "max"),
-            total_events=(time_col, "count"),
-            **{
-                col: (col, "first")
-                for col in df.columns
-                if col not in [time_col, event_col]
-            },
-        )
-        .reset_index()
-    )
-    return grouped
-
-
-import os
-import shutil
-import pandas as pd
 
 
 def save_partitioned_parquet(df, base_path, partition_cols):
-    """
-    Save a DataFrame as partitioned parquet files.
-    Deletes old partitions before writing.
 
-    Args:
-        df (pd.DataFrame): DataFrame to save
-        base_path (str): Output directory
-        partition_cols (list[str]): Columns to partition by
-    """
-
-    # Delete existing partitions for the values in df
-    for _, row in df[partition_cols].drop_duplicates().iterrows():
-        partition_path = base_path
-        for col in partition_cols:
-            partition_path = os.path.join(partition_path, f"{col}={row[col]}")
-        if os.path.exists(partition_path):
-            shutil.rmtree(partition_path)
-
-    # Write parquet
     df.to_parquet(
         base_path,
         engine="pyarrow",
         index=False,
         partition_cols=partition_cols,
+        existing_data_behavior="delete_matching",
     )
