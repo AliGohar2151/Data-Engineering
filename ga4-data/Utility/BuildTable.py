@@ -103,6 +103,7 @@ def groupby_pageview(df, time_col="event_timestamp", pageview_col="pageview_id")
         .groupby(pageview_col)
         .first()
     )
+
     representative_rows = firsts.copy()
     representative_rows.update(pageviews)
 
