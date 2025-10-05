@@ -8,6 +8,7 @@ start = time.time()
 
 base_dir = pathlib.Path(__file__).parent
 
+
 input_dir = (
     base_dir / "../ga4-clean/events-normalized/analytics291746817/2024/10"
 ).resolve()
