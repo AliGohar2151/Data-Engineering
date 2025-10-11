@@ -3,6 +3,7 @@ import pandas as pd
 from src.config.paths import RAW_DIR, PARQUET_DIR
 from src.utils.io_handler import read_gz_json, save_parquet
 from src.utils.normalizer import normalize_nested_params
+from src.utils.cleaner import clean_dataframe, clean_missing_values
 
 
 def process_file(file_path):
@@ -19,14 +20,6 @@ def process_file(file_path):
     final_df["month"] = event_date_dt.dt.month
 
     return final_df
-
-
-def clean_dataframe(df: pd.DataFrame) -> pd.DataFrame:
-    """Ensure all columns have compatible types for Parquet."""
-    for col in df.columns:
-        if df[col].dtype == "object":
-            df[col] = df[col].astype(str)
-    return df
 
 
 def run_normalization():

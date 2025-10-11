@@ -5,7 +5,7 @@ BASE_DIR = Path(__file__).resolve().parents[2]
 
 RAW_DIR = BASE_DIR / "data/raw"
 PROCESSED_DIR = BASE_DIR / "data/processed"
-PARQUET_DIR = BASE_DIR / "data/parquet"
+PARQUET_DIR = BASE_DIR / "data/clean"
 
 
 for d in [RAW_DIR, PROCESSED_DIR, PARQUET_DIR]:
