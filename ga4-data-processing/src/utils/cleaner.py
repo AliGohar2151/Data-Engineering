@@ -20,6 +20,10 @@ def clean_dataframe(df: pd.DataFrame) -> pd.DataFrame:
         df["ep_ga_session_id"] = df["ep_ga_session_id"].astype("string")
     if "ep_session_engaged" in df.columns:
         df["ep_session_engaged"] = df["ep_session_engaged"].astype("string")
+
+    if "Event Text" in df.columns:
+        df["Event Text"] = df["Event Text"].astype("string")
+
     return df
 
 
