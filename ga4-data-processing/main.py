@@ -10,8 +10,8 @@ if __name__ == "__main__":
 
     start_time = time.time()
 
-    # run_normalization()
-    # run_session_identifier()
-    # run_pageview_identifier()
+    run_normalization()
+    run_session_identifier()
+    run_pageview_identifier()
 
     print(f"Execution time: {time.time() - start_time:.2f} seconds")
