@@ -13,3 +13,14 @@ def read_gz_json(file_path):
 def save_parquet(df, path):
     df.to_parquet(path, index=False)
     print(f"Saved {path}")
+
+
+def save_partitioned_parquet(df, base_path, partition_cols):
+
+    df.to_parquet(
+        base_path,
+        engine="pyarrow",
+        index=False,
+        partition_cols=partition_cols,
+        existing_data_behavior="delete_matching",
+    )
