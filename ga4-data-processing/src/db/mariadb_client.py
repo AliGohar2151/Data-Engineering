@@ -35,6 +35,3 @@ class MariaDBClient:
         self.cursor.close()
         self.connection.close()
         print("Connection closed.")
-
-    def hello():
-        print("hello")
