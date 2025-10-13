@@ -7,8 +7,8 @@ from src.utils.cleaner import clean_dataframe
 
 
 def process_file(file_path):
-    # df = read_gz_json(file_path)
-    df = read_json(file_path)
+    df = read_gz_json(file_path)
+    # df = read_json(file_path)
 
     event_params_df = normalize_nested_params(df, "event_params", "ep_")
     user_props_df = normalize_nested_params(df, "user_properties", "user_prop_")
