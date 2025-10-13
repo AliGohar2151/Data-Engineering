@@ -8,30 +8,6 @@ from src.utils.df_utils import reorder_columns
 
 
 def make_session_id(df):
-    """
-    Generate session identifiers for GA4 event data and clean missing page locations.
-
-    Rules for session creation:
-    - A new session is created if the time difference between the current and previous
-      event of the same user is > 30 minutes.
-    - A new session is created for the first event of each user.
-    - Each new session receives a unique UUIDv4 string as the session_id.
-    - The same session_id is forward-filled to all subsequent rows until a new session starts.
-
-    Additional functionality:
-    - Converts event_timestamp from microseconds to pandas datetime.
-    - Replaces invalid "nan" string values in ep_page_location with proper pd.NA.
-    - Flags events where ep_page_location is missing or invalid (None, empty string, "nan").
-    - Identifies and removes sessions where *all* page locations are missing by setting
-      their session_id to pd.NA.
-    - Within valid sessions, fills missing ep_page_location values using forward-fill
-      and backward-fill so that gaps are filled with nearby valid values.
-    - Drops temporary helper columns (previous_timestamp, time_diff, new_session, is_missing).
-    - Reorders session_id to appear immediately after event_timestamp for readability.
-
-    :param file_path: The path to a parquet file to read.
-    :return: A pandas DataFrame with a session_id column.
-    """
 
     df["event_timestamp"] = pd.to_datetime(df["event_timestamp"], unit="us")
     df["ep_page_location"] = df["ep_page_location"].replace("nan", pd.NA)
