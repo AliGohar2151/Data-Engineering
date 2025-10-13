@@ -5,10 +5,13 @@ from src.db.mariadb_client import MariaDBClient
 
 
 class MappingRules:
-    def __init__(self, host, user, password, database, port):
-        self.db = MariaDBClient(
-            host=host, user=user, password=password, database=database, port=port
-        )
+    def __init__(self, host=None, user=None, password=None, database=None, port=3306):
+        if all(v is None for v in [host, user, password, database]):
+            self.db = None  # Skip DB connection in test mode
+        else:
+            self.db = MariaDBClient(
+                host=host, user=user, password=password, database=database, port=port
+            )
 
     def load_data(self):
         query = """
@@ -36,9 +39,18 @@ class MappingRules:
 
         return df, model_col_df
 
-    def build_rules(self):
+    def build_rules(self, df=None, model_col_df=None):
+        """
+        Build mapping rules either from DB (default) or from provided DataFrames.
+        """
+        if df is None or model_col_df is None:
+            df, model_col_df = self.load_data()
 
-        df, model_col_df = self.load_data()
+        return self._build_rules_internal(df, model_col_df)
+
+    @staticmethod
+    def _build_rules_internal(df, model_col_df):
+        """Core logic shared between DB mode and test mode."""
 
         df["field_priority"] = df["field_priority"].apply(
             lambda x: ast.literal_eval(x) if isinstance(x, str) else x
@@ -51,7 +63,12 @@ class MappingRules:
         for _, row in df.iterrows():
             key = (row["title"], row["field_title"])
             entry = combined_dict.setdefault(
-                key, {"title": row["field_title"], "field_priority": []}
+                key,
+                {
+                    "title": row["field_title"],
+                    "column_data_type": row.get("data_type", "unknown"),
+                    "field_priority": [],
+                },
             )
 
             ep_entry = next(
@@ -80,7 +97,6 @@ class MappingRules:
                                 "column_name": column_name,
                             }
                         )
-
                 elif fp["data_type"] == "event_parameter":
                     if not ep_entry:
                         ep_entry = {"data_type": "event_parameter", "rules": {}}
@@ -91,10 +107,25 @@ class MappingRules:
         final_json = [{table: info} for (table, _), info in combined_dict.items()]
         return final_json
 
-    def save_rules(self, filepath="mapping_rules.json"):
-        final_json = self.build_rules()
-        with open(filepath, "w") as f:
-            json.dump(final_json, f, indent=4)
+    def save_rules(self, rules_json=None, filepath="mapping_rules.json"):
+        """
+        Save mapping rules to a JSON file.
+
+        Behavior:
+        - If `rules_json` is provided, it saves that directly.
+        - If `rules_json` is None, it will build rules internally (default mode).
+        - Optionally specify a custom save path via `filepath`.
+        """
+
+        # Use provided JSON or build fresh
+        if rules_json is None:
+            rules_json = self.build_rules()
+
+        # Write JSON to file
+        with open(filepath, "w", encoding="utf-8") as f:
+            json.dump(rules_json, f, indent=4, ensure_ascii=False)
+
+        print(f"Mapping rules saved to: {filepath}")
         return filepath
 
 
