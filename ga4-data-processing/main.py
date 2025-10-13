@@ -11,9 +11,9 @@ if __name__ == "__main__":
 
     start_time = time.time()
 
-    # run_normalization()
-    # run_session_identifier()
-    # run_pageview_identifier()
+    run_normalization()
+    run_session_identifier()
+    run_pageview_identifier()
     run_build_tables()
 
     print(f"\n\nExecution time: {time.time() - start_time:.2f} seconds")
