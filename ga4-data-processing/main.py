@@ -7,6 +7,8 @@ from src.rules.mapping_rules import MappingRules
 
 if __name__ == "__main__":
 
+    print("\n\nProcessing started")
+
     start_time = time.time()
 
     run_normalization()
@@ -14,4 +16,4 @@ if __name__ == "__main__":
     run_pageview_identifier()
     run_build_tables()
 
-    print(f"\n\nExecution time: {time.time() - start_time:.2f} seconds")
+    print(f"\n\nComplete execution time: {time.time() - start_time:.2f} seconds")

@@ -21,45 +21,59 @@ def process_table(df, mapping_rules, name):
 
 
 def run_build_tables():
+    print("\nTable building started")
+
     start = time.time()
+
+    # --- Step 1: Load Mapping Rules ---
+    db_start = time.time()
     connection = MappingRules(**DB_CONFIG)
     mapping_rules = connection.build_rules()
     # connection.save_rules()
+    print(f"Mapping rules loaded in {time.time() - db_start:.2f} seconds")
 
+    # --- Step 2: Load Data ---
     input_dir = PROCESSED_DIR / "pageview-identifier/analytics_291746817/2024/10"
     input_path = input_dir / "events_pageview_identifier.parquet"
-
     output_dir = PROCESSED_DIR / "tables/analytics_291746817/2024/10"
     output_dir.mkdir(parents=True, exist_ok=True)
 
     print(f"Looking in: {input_dir}")
-    df = pd.read_parquet(input_path)
 
-    print(f"Processing Sessions table ...")
+    read_start = time.time()
+    df = pd.read_parquet(input_path)
+    print(f"Data loaded in {time.time() - read_start:.2f} seconds")
+
+    # --- Step 3: Process Tables ---
+    process_start = time.time()
+    print("Processing Sessions table ...")
     sessions_df = process_table(df, mapping_rules, "Sessions")
 
-    print(f"Processing Pageviews table ...")
+    print("Processing Pageviews table ...")
     pageviews_df = process_table(df, mapping_rules, "Pageviews")
 
-    print(f"Processing Events table ...")
+    print("Processing Events table ...")
     events_df = process_table(df, mapping_rules, "Events")
     events_df = clean_dataframe(events_df)
+    print(f"Tables processed in {time.time() - process_start:.2f} seconds")
 
-    print(f"Tables completed in {time.time() - start:.2f} seconds")
-
-    print(f"Saving Sessions table ...")
+    # --- Step 4: Save Outputs ---
+    save_start = time.time()
+    print("Saving Sessions table ...")
     save_partitioned_parquet(
         sessions_df, output_dir / "sessions", ["Stream ID", "year", "month"]
     )
 
-    print(f"Saving Pageviews table ...")
+    print("Saving Pageviews table ...")
     save_partitioned_parquet(
         pageviews_df, output_dir / "pageviews", ["stream_id", "year", "month"]
     )
 
-    print(f"Saving Events table ...")
+    print("Saving Events table ...")
     save_partitioned_parquet(
         events_df, output_dir / "events", ["stream_id", "year", "month"]
     )
+    print(f"Tables saved in {time.time() - save_start:.2f} seconds")
 
-    print(f"Tables saved in {time.time() - start:.2f} seconds")
+    # --- Summary ---
+    print(f"Table building completed in {time.time() - start:.2f} seconds")

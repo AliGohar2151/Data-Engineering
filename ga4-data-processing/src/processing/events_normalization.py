@@ -1,13 +1,14 @@
 import time
 import pandas as pd
 from src.config.paths import RAW_DIR, PARQUET_DIR
-from src.utils.io_handler import read_gz_json, save_parquet
+from src.utils.io_handler import read_gz_json, save_parquet, read_json
 from src.utils.normalizer import normalize_nested_params
 from src.utils.cleaner import clean_dataframe
 
 
 def process_file(file_path):
-    df = read_gz_json(file_path)
+    # df = read_gz_json(file_path)
+    df = read_json(file_path)
 
     event_params_df = normalize_nested_params(df, "event_params", "ep_")
     user_props_df = normalize_nested_params(df, "user_properties", "user_prop_")
@@ -23,12 +24,14 @@ def process_file(file_path):
 
 
 def run_normalization():
-    start = time.time()
+    print("\nNormalization started")
+
+    total_start = time.time()
     input_dir = RAW_DIR / "events-json/analytics_291746817/2024/10"
     output_dir = PARQUET_DIR / "events-normalized/analytics_291746817/2024/10"
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    print(f"Reading files from {input_dir}")
+    print(f"Reading files from: {input_dir}")
 
     files = list(input_dir.glob("*.json*"))
     if not files:
@@ -36,9 +39,28 @@ def run_normalization():
         return
 
     for file_path in files:
-        print(f"Processing {file_path.name} ...")
-        df = process_file(file_path)
-        df = clean_dataframe(df)
-        save_parquet(df, output_dir / f"{file_path.stem}.parquet")
+        file_start = time.time()
+        print(f"Processing file: {file_path.name}")
 
-    print(f"Normalization completed in {time.time() - start:.2f} seconds")
+        # Step 1: Read file
+        step_start = time.time()
+        df = process_file(file_path)
+        print(f"File read in {time.time() - step_start:.2f} seconds")
+
+        # Step 2: Clean data
+        step_start = time.time()
+        df = clean_dataframe(df)
+        print(f"Data cleaned in {time.time() - step_start:.2f} seconds")
+
+        # Step 3: Save parquet
+        step_start = time.time()
+        save_parquet(df, output_dir / f"{file_path.stem}.parquet")
+        print(f"Saved parquet in {time.time() - step_start:.2f} seconds")
+
+        # Per-file total
+        print(
+            f"Total time for {file_path.name}: {time.time() - file_start:.2f} seconds"
+        )
+
+    total_end = time.time()
+    print(f"\nNormalization completed in {total_end - total_start:.2f} seconds")

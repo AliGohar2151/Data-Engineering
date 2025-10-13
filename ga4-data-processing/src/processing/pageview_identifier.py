@@ -90,7 +90,10 @@ def make_pageview_id(df):
 
 
 def run_pageview_identifier():
+    print("\nPageview identification started")
+
     start = time.time()
+
     input_dir = PROCESSED_DIR / "session-identifier/analytics_291746817/2024/10"
     input_path = input_dir / "events_session_identifier.parquet"
     output_dir = PROCESSED_DIR / "pageview-identifier/analytics_291746817/2024/10"
@@ -99,8 +102,20 @@ def run_pageview_identifier():
 
     print(f"Looking in: {input_dir}")
 
+    # --- Step 1: Load data ---
+    read_start = time.time()
     df = pd.read_parquet(input_path)
-    df = make_pageview_id(df)
-    save_parquet(df, output_path)
+    print(f"Data loaded in {time.time() - read_start:.2f} seconds")
 
+    # --- Step 2: Process data ---
+    process_start = time.time()
+    df = make_pageview_id(df)
+    print(f"Pageview IDs generated in {time.time() - process_start:.2f} seconds")
+
+    # --- Step 3: Save data ---
+    save_start = time.time()
+    save_parquet(df, output_path)
+    print(f"Data saved in {time.time() - save_start:.2f} seconds")
+
+    # --- Total time ---
     print(f"Pageview identifier completed in {time.time() - start:.2f} seconds")

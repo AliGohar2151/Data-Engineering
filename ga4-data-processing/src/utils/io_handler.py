@@ -10,6 +10,13 @@ def read_gz_json(file_path):
     return pd.json_normalize(data, sep="_")
 
 
+def read_json(file_path):
+    with open(file_path, "r") as f:
+        data = json.load(f)
+
+    return pd.json_normalize(data, sep="_")
+
+
 def save_parquet(df, path):
     df.to_parquet(path, index=False)
     print(f"Saved {path}")

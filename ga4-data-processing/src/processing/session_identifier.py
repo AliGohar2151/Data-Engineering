@@ -168,6 +168,8 @@ def make_session_id(df):
 
 
 def run_session_identifier():
+    print("\nSession identification started")
+
     start = time.time()
 
     input_dir = PARQUET_DIR / "events-normalized/analytics_291746817/2024/10"
@@ -182,10 +184,17 @@ def run_session_identifier():
         print(f"No files found in {input_dir}")
         return
 
+    read_start = time.time()
     df = pd.concat([pd.read_parquet(f) for f in files], ignore_index=True)
+    print(f"Files loaded in {time.time() - read_start:.2f} seconds")
 
+    process_start = time.time()
     df = make_session_id(df)
     df = clean_dataframe(df)
+    print(f"Session IDs generated in {time.time() - process_start:.2f} seconds")
+
+    save_start = time.time()
     save_parquet(df, output_path)
+    print(f"Data saved in {time.time() - save_start:.2f} seconds")
 
     print(f"Session identifier completed in {time.time() - start:.2f} seconds")
