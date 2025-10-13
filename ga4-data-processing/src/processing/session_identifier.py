@@ -3,7 +3,7 @@ import time
 import uuid
 from src.config.paths import PARQUET_DIR, PROCESSED_DIR
 from src.utils.io_handler import save_parquet
-from src.utils.cleaner import clean_dataframe, clean_missing_values
+from src.utils.cleaner import clean_dataframe
 from src.utils.df_utils import reorder_columns
 
 
