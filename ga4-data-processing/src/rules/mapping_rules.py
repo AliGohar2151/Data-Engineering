@@ -21,8 +21,7 @@ class MappingRules:
             mt.title,
             tf.field_priority,
             ep.event_name,
-            ep.ep,
-            tf.data_type
+            
         FROM
             ga4_org_model_table_fields tf
         LEFT JOIN ga4_org_model_tables mt 
