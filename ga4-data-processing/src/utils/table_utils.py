@@ -44,6 +44,7 @@ def build_table(df, mapping_rules, table_name):
         field_info = entry[table_name]
         field_title = field_info["title"]
         field_priority = field_info.get("field_priority", [])
+        column_data_type = field_info.get("column_data_type")
 
         values = np.full(len(df), None, dtype=object)
         nan_mask = pd.isna(values)
@@ -68,8 +69,41 @@ def build_table(df, mapping_rules, table_name):
                         nan_mask = pd.isna(values)
 
         output_df[field_title] = pd.Series(values, index=df.index)
+        output_df[field_title] = pd.Series(values, index=df.index)
+        if column_data_type:
+            output_df[field_title] = convert_column_dtype(
+                output_df[field_title], column_data_type, field_title
+            )
 
     return output_df
+
+
+def convert_column_dtype(series, dtype_name, field_title):
+    dtype_name = str(dtype_name).lower().strip()
+
+    try:
+        if dtype_name == "integer":
+            try:
+                return series.astype("Int64")
+            except Exception:
+                print(f"Non-numeric value fount in {field_title}, keeping as string.")
+                return series.astype("string")
+        elif dtype_name == "float":
+            return pd.to_numeric(series, errors="coerce")
+        elif dtype_name == "string":
+            return series.astype("string")
+        elif dtype_name == "date":
+            return pd.to_datetime(series, errors="coerce").dt.date
+        elif dtype_name == "datetime":
+            return pd.to_datetime(series, errors="coerce")
+        else:
+            print(
+                f"Unknown data type {dtype_name} for column {field_title}, Skipping conversion."
+            )
+            return series
+    except Exception as e:
+        print(f"Failed to convert column {field_title} to {dtype_name}: {e}")
+        return series.astype("string")
 
 
 def groupby_sessions(df, time_col="event_timestamp", session_col="session_id"):
