@@ -44,8 +44,6 @@ def build_table(df, mapping_rules, table_name):
         field_info = entry[table_name]
         field_title = field_info["title"]
         field_priority = field_info.get("field_priority", [])
-        column_data_type = field_info.get("column_data_type")
-
         values = np.full(len(df), None, dtype=object)
         nan_mask = pd.isna(values)
 
@@ -70,10 +68,6 @@ def build_table(df, mapping_rules, table_name):
 
         output_df[field_title] = pd.Series(values, index=df.index)
         output_df[field_title] = pd.Series(values, index=df.index)
-        if column_data_type:
-            output_df[field_title] = convert_column_dtype(
-                output_df[field_title], column_data_type, field_title
-            )
 
     return output_df
 

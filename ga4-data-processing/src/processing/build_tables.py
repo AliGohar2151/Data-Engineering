@@ -4,7 +4,12 @@ from src.rules.mapping_rules import MappingRules
 from src.config.settings import DB_CONFIG
 from src.config.paths import PROCESSED_DIR
 from src.utils.io_handler import save_partitioned_parquet
-from src.utils.table_utils import build_table, groupby_pageview, groupby_sessions
+from src.utils.table_utils import (
+    build_table,
+    groupby_pageview,
+    groupby_sessions,
+    convert_column_dtype,
+)
 from src.utils.cleaner import clean_dataframe
 from IPython.display import display
 
@@ -16,6 +21,19 @@ def process_table(df, mapping_rules, name):
         temp_df = groupby_sessions(temp_df)
     elif name == "Pageviews":
         temp_df = groupby_pageview(temp_df)
+
+    column_type_map = {}
+    for rules in mapping_rules:
+        session_data = rules.get(name, {})
+        title = session_data.get("title")
+        data_type = session_data.get("column_data_type")
+        if title and data_type:
+            column_type_map[title] = data_type
+
+    print(f"Converting column types for {name}...")
+    for col, dtype in column_type_map.items():
+        if col in temp_df.columns:
+            temp_df[col] = convert_column_dtype(temp_df[col], dtype, col)
 
     return temp_df
 
