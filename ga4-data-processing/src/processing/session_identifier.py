@@ -5,6 +5,7 @@ from src.config.paths import PARQUET_DIR, PROCESSED_DIR
 from src.utils.io_handler import save_parquet
 from src.utils.cleaner import clean_dataframe
 from src.utils.df_utils import reorder_columns
+from src.utils.df_utils import convert_timezone
 
 
 def make_session_id(df):
@@ -32,8 +33,8 @@ def make_session_id(df):
     :param file_path: The path to a parquet file to read.
     :return: A pandas DataFrame with a session_id column.
     """
-
-    df["event_timestamp"] = pd.to_datetime(df["event_timestamp"], unit="us")
+    timezone = "America/Los_Angeles"
+    df = convert_timezone(df, "event_timestamp", timezone)
     df["ep_page_location"] = df["ep_page_location"].replace("nan", pd.NA)
     df = df.sort_values(["user_pseudo_id", "event_timestamp"])
     session_timeout = pd.Timedelta(minutes=30)

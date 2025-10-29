@@ -46,3 +46,15 @@ def reorder_columns(
             target_col = c  # Update target for sequential insertion
 
     return df[cols]
+
+
+def convert_timezone(df, column_name, timezone):
+
+    if column_name not in df.columns:
+        print(f"Column '{column_name}' not found in the DataFrame.")
+        return df
+    else:
+        df[column_name] = pd.to_datetime(df[column_name], unit="us", utc=True)
+        df[column_name] = df[column_name].dt.tz_convert(timezone).dt.tz_localize(None)
+
+        return df

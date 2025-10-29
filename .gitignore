@@ -199,3 +199,7 @@ ga4-data/script/tempCodeRunnerFile.py
 Jupyter_Markdown_Cheat_Sheet.ipynb
 ga4-data-processing/data/
 ga4-data-processing/notebooks
+Dockerfile
+docker-compose-testing.yml
+docker-compose.testing.yml
+.vscode/
